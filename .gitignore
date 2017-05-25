@@ -1,0 +1,6 @@
+#exclude the data folder
+!.gitignore
+
+world/data/*
+
+
