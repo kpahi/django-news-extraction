@@ -2,5 +2,5 @@
 !.gitignore
 
 world/data/*
-
-
+*.pyc
+/__pycache__/*.pyc
