@@ -1,0 +1,16 @@
+<html>
+<body>
+
+
+<form action="/news_ie/" method="post">
+{% csrf_token %}
+{{ form }}
+<input type="submit" value="Submit" />
+</form>
+
+{% if data %}
+{{ data.news }}
+{{ data.news_text}}
+{% endif %}
+
+</html>

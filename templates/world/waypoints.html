@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+{% for waypoint in waypoints %}
+    <div id={{waypoint.id}} class='waypoint linkOFF'>
+        {{waypoint.name}} ({{waypoint.geometry.y}}, {{waypoint.geometry.x}})
+    </div>
+{% endfor %}
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-success">Success</button>
+
+</html>

@@ -21,6 +21,8 @@ from world import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^news_ie/', include('news_ie.urls')),
+
 
     #url(r'^', include('world.urls')),
 ]

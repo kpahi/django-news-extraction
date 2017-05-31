@@ -30,5 +30,9 @@ class WayPoint(models.Model):
     geometry = models.PointField(srid=4326)
     objects = models.GeoManager()
 
+    # Returns the string representation of the model.
+    def __str__(self):
+        return self.name
+
     def __unicode__(self):
         return '%s %s %s' % (self.name, self.geometry.x, self.geometry.y)

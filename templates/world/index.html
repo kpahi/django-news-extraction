@@ -1,24 +1,108 @@
+
 <!doctype html>
 <html>
 <head>
+  {% load staticfiles %}
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" type="text/css"/>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 <script>
-var map;
+var map, marker, waypointByID = {};
+
 function initialize() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 5,
-        center: new google.maps.LatLng(41.879535, -87.624333),
+        zoom: 12,
+        center: new google.maps.LatLng(27.7172453, 85.3239605),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 }
+
+{% for waypoint in waypoints %}
+waypointByID[{{waypoint.id}}] = {
+    name: "{{waypoint.name}}",
+    lat: {{waypoint.geometry.y}},
+    lng: {{waypoint.geometry.x}}
+};
+{% endfor %}
+
+$(document).ready(function () {
+    function activateWaypoints() {
+        // Add waypoint click handler
+        $('.waypoint').each(function () {
+            $(this).click(function() {
+                var waypoint = waypointByID[this.id];
+                var center = new google.maps.LatLng(waypoint.lat, waypoint.lng);
+                if (marker) marker.setMap();
+                marker = new google.maps.Marker({map: map, position: center});
+                map.panTo(center);
+            }).hover(
+                function () {this.className = this.className.replace('OFF', 'ON');},
+                function () {this.className = this.className.replace('ON', 'OFF');}
+            );
+        });
+    }
+/*
+    function showAllWayPoints(){
+      var x=5;
+      var y = 6;
+      var z = x+y;
+      var wayPoinIds = [];
+    //  $("#id").find("div").each(function()){wayPoinIds.push($(this).attr("id"));}
+    $('.waypoints').each(function(){
+      wayPoinIds.push($(this).id);
+
+    })
+
+    var waypoint = wayPoinIds[1]
+    console.log(z);
+
+        //var waypoint = wayPoinIds[i];
+        var center = new google.maps.LatLng(waypoint.lat, waypoint.lng);
+        if (marker) marker.setMap();
+        marker = new google.maps.Marker({map: map, position: center});
+        map.panTo(center);
+          }
+  //    }
+
+
+*/
+    activateWaypoints();
+
+    $("btn").click(function(){
+      showAllWayPoints();
+    });
+});
 </script>
+<script>
+$(document).ready(function(){
+  var x=5;
+  var y = 6;
+  var z = x+y;
+  console.log(z);
+});
+</script>
+
 <style>
     body {font-family: sans-serif}
-    #map {width: 1200px; height: 600px}
+    #map {width: 800px; height: 300px}
+    #waypoints {overflow: auto; width: 500px; height: 100px}
+    .linkOFF {color: darkblue}
+    .linkON {color: white; background-color: darkblue}
 </style>
 </head>
 <body onload='initialize()'>
     <div id=map></div>
+    <div id=waypoints>
+        {{content}}
+    </div>
+
+    {% for waypoint in waypoints %}
+        <div id={{waypoint.id}} class='waypoint linkOFF'>
+            {{waypoint.name}} ({{waypoint.geometry.y}}, {{waypoint.geometry.x}})
+        </div>
+    {% endfor %}
+
+    <button type="button" class="btn btn-primary">Show all Waypoints</button>
 </body>
 </html>
