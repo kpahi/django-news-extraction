@@ -1,13 +1,17 @@
 import datetime
+import string
 import sys
 
+from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.http import HttpResponse
 from django.shortcuts import render
+
+from world.models import WayPoint
 
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
 from .forms import NameForm
-from .semantic import get_semantic_roles
+from .geocoder import *
 from .sentoken import sentences
 from .up import rep
 
@@ -43,8 +47,6 @@ def get_news(request):
                 print(sent + "\n")
 
             sentences_dic = dict((i, splited_sen[i]) for i in range(0, len(splited_sen)))
-            # dict((k,2) for k in a)
-            #sen = dict(map(int, x.split(':')) for x in splited_sen)
             print(sentences_dic)
 
             # Get the vehicle no. Here number_plate is the dictionary
@@ -55,7 +57,21 @@ def get_news(request):
             location = getlocation(splited_sen[0])
             print(location)
 
-            return render(request, 'news_ie/index.html', {'data': data, 'form': form, 'sentences_dic': sentences_dic, 'number_plate': number_plate})
+            location_coordinates = find_lat_lng(location)
+
+            # print(location_coordinates[0])
+            # print(location_coordinates[1])
+
+            # Save the Coordinate of the location to Database as WayPoint
+            lat = str(location_coordinates[0])
+            lng = str(location_coordinates[1])
+            #gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
+            gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
+            my_long_lat = lat + " " + lng
+            #gem = fromstr('POINT(' + my_long_lat + ')')
+            WayPoint(name=' '.join(location), geometry=gem).save()
+
+            return render(request, 'news_ie/index.html', {'form': form, 'sentences_dic': sentences_dic, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
