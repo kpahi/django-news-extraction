@@ -1,16 +1,40 @@
 <html>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" type="text/css"/>
+
 <body>
+
 
 
 <form action="/news_ie/" method="post">
 {% csrf_token %}
 {{ form }}
-<input type="submit" value="Submit" />
+ <input  class="btn btn-info" type="submit" value="Submit" />
+
 </form>
 
-{% if data %}
-{{ data.news }}
-{{ data.news_text}}
+{% if sentences_dic %}
+<div class="row">
+  <p>  Sentences in given news are : </p>
+</div>
+{% for key,value in sentences_dic.items %}
+
+<div>{{ key }} {{  value }}
+</div>
+{% endfor %}
+
+<h3> Vehicles Involved in accident </h3>
+{% for key,value in number_plate.items %}
+<div>
+{{ key }} ==>
+{{ value }}
+
+</div>
+
+{% endfor %}
 {% endif %}
+</body>
+
+
 
 </html>
