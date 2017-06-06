@@ -14,7 +14,7 @@ var map, marker, waypointByID = {};
 
 function initialize() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+        zoom: 6,
         center: new google.maps.LatLng(27.7172453, 85.3239605),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
@@ -109,7 +109,9 @@ var waypointByID = {};
 
    var map = new google.maps.Map(document.getElementById('map'), {
      zoom: 10,
-     center: new google.maps.LatLng(55.755, 37.615),
+     // Nepal 27.7172453, 85.3239605
+     // Websit 55.755, 37.615
+     center: new google.maps.LatLng(27.7172453, 85.3239605),
      mapTypeId: google.maps.MapTypeId.ROADMAP
    });
 
@@ -132,7 +134,7 @@ var waypointByID = {};
 
    var marker, i;
 
-   for (i = 2; i < 5; i++) {
+   for (i = 18; i < 21; i++) {
 
      marker = new google.maps.Marker({
        position: new google.maps.LatLng(waypointByID[i]['lat'], waypointByID[i]['lng']),
@@ -143,7 +145,7 @@ var waypointByID = {};
 
      google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
        return function() {
-         infowindow.setContent(locations[i][0]);
+         infowindow.setContent(waypointByID[i]['name']);
          infowindow.open(map, marker);
        }
      })(marker, i));
