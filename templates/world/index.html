@@ -134,7 +134,7 @@ var waypointByID = {};
 
    var marker, i;
 
-   for (i = 18; i < 21; i++) {
+   for (i = 12; i < 21; i++) {
 
      marker = new google.maps.Marker({
        position: new google.maps.LatLng(waypointByID[i]['lat'], waypointByID[i]['lng']),
@@ -149,6 +149,26 @@ var waypointByID = {};
          infowindow.open(map, marker);
        }
      })(marker, i));
+
+     google.maps.event.addListener(marker,'mouseout', (function (marker,i,infowindow) {
+       return function() {
+         infowindow.close();
+
+       }
+        })(marker,i,infowindow));
+
+      google.maps.event.addListener(marker,'click', (function (marker,i){
+        return function(){
+          var c = waypointByID[i]['lat'];
+          infowindow.setContent("You clicked " + waypointByID[i]['lat'] + " " + waypointByID[i]['lng']);
+          infowindow.open(map,marker);
+
+
+        }
+      })(marker,i));
+
+
+
    }
 
 }
