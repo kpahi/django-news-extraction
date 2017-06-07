@@ -9,5 +9,5 @@ def find_lat_lng(locations):
         # if coordintae found from 1st location done[pass] else continue loop
         if location_coord:
             pass
-            print(location_coord[1])
+            # print(location_coord[1])
     return location_coord[1]

@@ -1,10 +1,10 @@
-<html>
-  {% load staticfiles %}
-  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" type="text/css"/>
 
-<body>
+{% extends "base.html" %}
+{% block title %} News Information Extraciton {% endblock title %} 
 
+{% block content %}
 
+<div class="container">
 
 <form action="/news_ie/" method="post">
 {% csrf_token %}
@@ -12,6 +12,7 @@
  <input  class="btn btn-info" type="submit" value="Submit" />
 
 </form>
+
 
 {% if sentences_dic %}
 <div class="row">
@@ -22,6 +23,13 @@
 <div>{{ key }} {{  value }}
 </div>
 {% endfor %}
+
+
+<h3> Death Number </h3>
+{{ death }}
+
+<h3> Injury Number </h3>
+{{ injury }}
 
 <h3> Vehicles Involved in accident </h3>
 {% for key,value in number_plate.items %}
@@ -38,8 +46,6 @@
 </div>
 
 {% endif %}
-</body>
 
-
-
-</html>
+</div>
+{% endblock content %}
