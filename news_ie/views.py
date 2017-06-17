@@ -92,7 +92,7 @@ def get_news(request):
             #WayPoint(name=' '.join(location), geometry=gem).save()
 
             # Now save the story
-            story.save()
+            # story.save()
 
             return render(request, 'news_ie/index.html', {'form': form, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
     else:
