@@ -21,7 +21,8 @@ function initialize() {
 }
 
 {% for waypoint in waypoints %}
-waypointByID[{{waypoint.id}}] = {
+waypointByID[{<h3>Date of Accident</h3>
+{{date}}{waypoint.id}}] = {
     name: "{{waypoint.name}}",
     lat: {{waypoint.geometry.y}},
     lng: {{waypoint.geometry.x}}
@@ -57,13 +58,16 @@ $(document).ready(function () {
 
 <style>
     body {font-family: sans-serif}
-    #map {width: 800px; height: 300px}
-    #waypoints {overflow: auto; width: 500px; height: 100px}
+    #map {width: 800px; height: 900px}
+    #waypoints {overflow: auto; width: 500px; height: 300px}
     .linkOFF {color: darkblue}
     .linkON {color: white; background-color: darkblue}
+
 </style>
 </head>
 <body onload='initialize()'>
+
+   
 
     <div id=map></div>
 
@@ -78,6 +82,7 @@ $(document).ready(function () {
     {% endfor %}
 
     <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
+
 </body>
 
 <script>
