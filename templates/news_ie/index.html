@@ -50,5 +50,19 @@
 
 {% endif %}
 
-</div>
+</div>  
+
+    <div id=map></div>
+
+    <div id=waypoints>
+        {{content}}
+    </div>
+
+    {% for waypoint in waypoints %}
+        <div id={{waypoint.id}} class='waypoint linkOFF'>
+            {{waypoint.name}} ({{waypoint.geometry.y}}, {{waypoint.geometry.x}})
+        </div>
+    {% endfor %}
+
+    <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 {% endblock content %}
