@@ -8,16 +8,15 @@ from django.shortcuts import render
 
 from world.models import WayPoint
 
+from .extraction.getdate import extract_date
 from .extraction.getdeathinjury import *
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
-from .extraction.getdate import extract_date
 from .forms import NameForm
 from .geocoder import *
 from .models import News
 from .sentoken import sentences
 from .up import rep
-
 
 # Create your views here.
 
@@ -30,6 +29,8 @@ def index(request):
 def get_news(request):
     if request.method == 'POST':
         form = NameForm(request.POST)
+        # To display waypoints on the maps
+        waypoints = WayPoint.objects.order_by('name')
 
         if form.is_valid():
             story = News()
@@ -74,7 +75,7 @@ def get_news(request):
             story.injury = injury
 
             extdate = extract_date(sentlist)
-            print("Date:",extdate)
+            print("Date:", extdate)
 
             # Get location from 1st sentences list
             location = getlocation(splited_sen[0])
@@ -98,7 +99,7 @@ def get_news(request):
             # Now save the story
             # story.save()
 
-            return render(request, 'news_ie/index.html', {'form': form, 'date':extdate,'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
     else:
         form = NameForm()
 

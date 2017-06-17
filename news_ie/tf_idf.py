@@ -30,7 +30,7 @@ def tf(term, document):
 def idf(term, allDocuments):
     numDocumentsWithThisTerm = 0
     for doc in allDocuments:
-        if term.lower() in doc.lower().split():
+        if term.lower() in doc  .lower().split():
             numDocumentsWithThisTerm += 1
 
     if numDocumentsWithThisTerm > 0:

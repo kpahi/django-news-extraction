@@ -2,8 +2,10 @@ from nltk.tag import StanfordNERTagger
 from nltk.tokenize import word_tokenize
 
 # Change the path according to your system
-stanford_classifier='/home/amit/stanford-ner-2016-10-31/classifiers/english.all.3class.distsim.crf.ser.gz'
-stanford_ner_path = '/home/amit/stanford-ner-2016-10-31/stanford-ner.jar'
+stanford_classifier = '/home/kritish/Downloads/stanford-ner-2016-10-31/classifiers/english.all.3class.distsim.crf.ser.gz'
+stanford_ner_path = '/home/kritish/Downloads/stanford-ner-2016-10-31/stanford-ner.jar'
+
+
 # Creating Tagger Object
 st = StanfordNERTagger(stanford_classifier, stanford_ner_path, encoding='utf-8')
 text = "Elderly woman killed in Jhapa pick-up van hit Damak Mar 11, 2017- An elderly woman died after being hit by a pick-up van at Lakhanpur in Jhapa district on Saturday."
@@ -20,6 +22,7 @@ def getlocation(text):
     for text in classified_text:
         if 'LOCATION' in text:
             location.append(text[0])
+    # print(location)
     return location
 
 
