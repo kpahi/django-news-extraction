@@ -1,6 +1,7 @@
+from datetime import date
+
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-
 
 # Create your models here.
 
@@ -10,8 +11,9 @@ class News(models.Model):
     death = models.CharField(blank=True, max_length=100)
     injury = models.CharField(blank=True, max_length=100)
     location = models.CharField(blank=True, max_length=100)
-    #vehicle_no = models.CharField(blank=True, max_length=100)
+    vehicle_no = models.CharField(blank=True, max_length=100)
     vehicle_no = JSONField()
+    date = models.DateField(default=date.today)
 
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)

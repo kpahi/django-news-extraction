@@ -10,6 +10,7 @@ from world.models import WayPoint
 
 from .extraction.getdate import extract_date
 from .extraction.getdeathinjury import *
+from .extraction.getnewlocation import geotraverseTree
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
 from .forms import NameForm
@@ -76,8 +77,12 @@ def get_news(request):
 
             extdate = extract_date(sentlist)
             print("Date:", extdate)
+            s = extdate[0]
+
+            story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
 
             # Get location from 1st sentences list
+            # location = geotraverseTree(splited_sen[0])
             location = getlocation(splited_sen[0])
             print(' '.join(location))
             story.location = ' '.join(location)
@@ -93,11 +98,11 @@ def get_news(request):
             #gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
             gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
             my_long_lat = lat + " " + lng
-            #gem = fromstr('POINT(' + my_long_lat + ')')
-            #WayPoint(name=' '.join(location), geometry=gem).save()
+            gem = fromstr('POINT(' + my_long_lat + ')')
+            WayPoint(name=' '.join(location), geometry=gem).save()
 
             # Now save the story
-            # story.save()
+            story.save()
 
             return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
     else:
