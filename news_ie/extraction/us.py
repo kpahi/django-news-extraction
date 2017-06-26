@@ -1,6 +1,9 @@
+#!/home/kritish/.venv/py/bin/python
+
 #/usr/bin/python2.7
 
 
+import os
 import pickle
 import sys
 
@@ -11,6 +14,10 @@ from sklearn.linear_model import Perceptron
 from sklearn.pipeline import Pipeline
 
 from ner_with_python import features, read_gmb, shape, to_conll_iob
+
+DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.join(DIR, 'extraction')
+name = path + '/my_dumped_classifier_3.pkl'
 
 
 class ScikitLearnChunker(ChunkParserI):
@@ -93,9 +100,10 @@ class ScikitLearnChunker(ChunkParserI):
 
 def main():
     sent = sys.argv[1]
+    # print(sent)
     # print(sys.argv[1])
     filename = 'my_dumped_classifier_3.pkl'
-    loaded_model = pickle.load(open(filename, 'rb'))
+    loaded_model = pickle.load(open(name, 'rb'))
     RESULT = loaded_model.parse(pos_tag(word_tokenize(sent)))
     print RESULT
 

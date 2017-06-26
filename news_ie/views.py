@@ -50,13 +50,13 @@ def get_news(request):
             sentlist = sentclass.split_into_sentences(data['news_text'])
             splited_sen = []
             # print each sentences
-            print("\n" + "After Spliting " + "\n")
+            # print("\n" + "After Spliting " + "\n")
             for sent in sentlist:
                 splited_sen.append(sent)
-                print(sent + "\n")
+                # print(sent + "\n")
 
             sentences_dic = dict((i, splited_sen[i]) for i in range(0, len(splited_sen)))
-            print(sentences_dic)
+            # print(sentences_dic)
 
             # Get the vehicle no. Here number_plate is the dictionary
             number_plate = vehicle_no(splited_sen)
@@ -82,12 +82,21 @@ def get_news(request):
             story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
 
             # Get location from 1st sentences list
-            # location = geotraverseTree(splited_sen[0])
-            location = getlocation(splited_sen[0])
-            print(' '.join(location))
-            story.location = ' '.join(location)
+            # from the classifier
+            location = geotraverseTree(splited_sen[0])
+            story.location = location
 
-            location_coordinates = find_lat_lng(location)
+            # from standford, dont forget to use ' '.join(location)
+            # location = getlocation(splited_sen[0])
+            # print(' '.join(location))
+            # story.location = ' '.join(location)
+
+            # location_coordinates = find_lat_lng(location)
+
+            try:
+                location_coordinates = find_lat_lng(location)
+            except Exception:
+                location_coordinates = [0.0, 0.0]
 
             # print(location_coordinates[0])
             # print(location_coordinates[1])
@@ -104,7 +113,7 @@ def get_news(request):
             # Now save the story
             story.save()
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': ' '.join(location), 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
