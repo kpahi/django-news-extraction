@@ -40,8 +40,8 @@ def get_news(request):
 
             #data['news'] = rep(data['news'])
 
-            print("Befor Splitting \n")
-            print(data['news_text'])
+            # print("Befor Splitting \n")
+            # print(data['news_text'])
             #data['news_text'] = rep(data['news_text'])
             # Split the news into sentences [pre-processing]
 
@@ -84,6 +84,7 @@ def get_news(request):
             # Get location from 1st sentences list
             # from the classifier
             location = geotraverseTree(splited_sen[0])
+            print(location)
             story.location = location
 
             # from standford, dont forget to use ' '.join(location)
@@ -111,10 +112,44 @@ def get_news(request):
             WayPoint(name=' '.join(location), geometry=gem).save()
 
             # Now save the story
-            story.save()
+            # story.save()
+            save_story(story, data)
 
             return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
     return render(request, 'news_ie/index.html', {'form': form})
+
+# Save the story from the data
+# Try Jaccard distance
+
+
+def save_story(story, data):
+    sim = []
+    doc1 = set(data['news_text'].split())
+
+    # get all the saved story
+    savedStory = News.objects.all()
+    for s in savedStory:
+        doc2 = set(s.body.split())
+        # find union
+        union = list(doc1 | doc2)
+        intersec = list(doc2.intersection(doc1))
+        #intersection = list(set(doc1) - (set(doc1) - set(doc2)))
+        jacc_coef = float(len(intersec)) / len(union)
+        sim.append(jacc_coef)
+
+    # print(sim)
+    jacc_max = max(sim)
+    # print(jacc_max)
+
+    # set the threshold value to identify Duplicate
+
+    thresHold = .90
+
+    if jacc_max < thresHold:
+        story.save()
+        print("Save Successful:")
+    else:
+        print("Duplicate News Exists:")
