@@ -3,7 +3,6 @@ from django.shortcuts import render_to_response
 
 from .models import WayPoint
 
-
 # Create your views here.
 
 

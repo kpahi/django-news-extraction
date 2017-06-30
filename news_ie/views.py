@@ -149,7 +149,9 @@ def save_story(story, data):
     thresHold = .90
 
     if jacc_max < thresHold:
-        story.save()
+
+        s = story.save()
+
         print("Save Successful:")
     else:
         print("Duplicate News Exists:")

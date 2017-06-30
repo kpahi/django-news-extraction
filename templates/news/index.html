@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+
+
+{% block title %} News Information Extraciton {% endblock title %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+<div class="col-md-6">
+</div>
+
+<div class="col-md-6">
+  <div class="panel-default">
+  <div class="panel-heading">
+    <h2> News </h2>
+  </div>
+  <div class="panel-body">
+  </div>
+    <div class="pre-scrollable">
+      {% for n in object_list %}
+      <a href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
+      <hr>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock content %}
+
+<script>
+var accidentNews;
+
+
+
+
+</script>

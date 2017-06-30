@@ -1,0 +1,9 @@
+
+
+
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: black !important;
+    color: white;
+
+}

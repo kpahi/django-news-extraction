@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from news import views
 from world import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^news_ie/', include('news_ie.urls')),
+    url(r'^news/', include('news.urls')),
 
 
     #url(r'^', include('world.urls')),
