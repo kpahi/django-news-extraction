@@ -11,12 +11,35 @@
 
 <div class="container">
 <div class="col-md-6">
+  <div class="panel-default">
+  <div class="panel-heading">
+    <h4> Current </h4>
+  </div>
+  <div class="panel-body">
+    <ul class="nav nav-tabs">
+      <li><a href="#item1" onclick="bikeAll('bike')"> Bike </a> </li>
+      <li><a href="#item2" onclick="bikeAll('bus')"> Bus </a> </li>
+      <li><a href="#item3" onclick="bikeAll('tipper')"> Tipper </a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade in active">
+        <h3 id="demo">Nepal from demo  <br> </h3>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
 </div>
 
 <div class="col-md-6">
   <div class="panel-default">
-  <div class="panel-heading">
-    <h2> News </h2>
+  <div class="panel-heading text-center panel-relative">
+    <h4> News </h4>
   </div>
   <div class="panel-body">
   </div>
@@ -34,10 +57,92 @@
 
 {% endblock content %}
 
+
+{% block javascript %}
 <script>
-var accidentNews;
+$(document).ready(function() {
+  $(".nav-tabs a").click(function {
+    $(this).tab('show');
+  });
 
 
 
+
+
+
+document.getElementById("demo").append("CCN");
+
+
+});
+</script>
+
+
+<script>
+
+    function bikeAll(name) {
+     var i =0;
+     var arr = [];
+     var arr_bike=[];
+    var accidentNews={};
+  {% for news in object_list %}
+
+   accidentNews[{{news.id}}] = {
+     location : "{{ news.location }}",
+     death : "{{ news.death }}",
+     injury:"{{ news.injury}}",
+     vehicle_no:"{{ news.vehicle_no }}",
+     date:"{{ news.date }}",
+     url:"{{ news.get_absolute_url }}",
+
+   };
+
+
+     {% for key,value in news.vehicle_no.items %}
+
+     {% if  key == "tipper"  %}
+      if (name == 'tipper'){
+        arr.push(accidentNews[{{ news.id }}]);
+      }
+
+
+     {% endif %}
+
+     {% if key == "bike" %}
+     if (name == 'bike'){
+     arr.push(accidentNews[{{ news.id }}]);
+   }
+     {% endif %}
+
+     {% if  key == "bus"  %}
+      if (name == 'bus'){
+        arr.push(accidentNews[{{ news.id }}]);
+      }
+
+
+     {% endif %}
+
+     {% endfor %}
+
+
+  {% endfor %}
+
+
+    var i;
+
+
+    document.getElementById("demo").innerHTML = "";
+    var s;
+
+    for (i=0; i<arr.length;i++){
+      var s= arr[i].url;
+      var mycode1 = "<a href='" + s + "'> ";
+      var mycode2 = "</a>";
+
+
+     document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 + "<br>"  ;
+   }
+
+  };
 
 </script>
+{% endblock javascript %}}

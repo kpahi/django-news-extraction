@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="container">
+  <div class="row">
 
 <form action="/news_ie/" method="post">
 {% csrf_token %}
@@ -12,9 +13,11 @@
  <input  class="btn btn-info" type="submit" value="Submit" />
 
 </form>
+</div>
 
 
 {% if sentences_dic %}
+<!--
 <div class="row">
   <p>  Sentences in given news are : </p>
 </div>
@@ -23,42 +26,68 @@
 <div>{{ key }} {{  value }}
 </div>
 {% endfor %}
+-->
+
+<div class="row">
+<div class="col-md-6">
+
+<table>
+  <tr>
+    <th scope="row"> <h3> Death </h3>  </th>
+    <td> {{ death }} </th>
+
+  </tr>
+  <tr>
+    <th scope="row">
+      <h3> Injury Number </h3> </th>
+    <td> {{ injury }} <td>
+    </tr>
+  <tr>
+    <th scope="row"><h3> Date of Accident </h3></th>
+    <td>   {{date}} </td>
+  </tr>
+
+  <tr>
+    <th>  <h3> Vehicles Involved in accident </h3> </th>
+    <td>
+    {% for key,value in number_plate.items %}
+    <div>
+    {{ key }} ==>    {{ value }}
+
+    </div>
+
+    {% endfor %}
+  </td>
+  </tr>
+
+  <tr>
+    <th><h3> Location of Accident </h3> </th>
+
+  <td>  {{ location }} ==> {{ coordintae }}</td>
+</tr>
 
 
-<h3> Death Number </h3>
-{{ death }}
+    {% endif %}
 
-<h3> Injury Number </h3>
-{{ injury }}
-
-<h3>Date of Accident</h3>
-{{date}}
-
-<h3> Vehicles Involved in accident </h3>
-{% for key,value in number_plate.items %}
-<div>
-{{ key }} ==>
-{{ value }}
-
+</table>
 </div>
 
-{% endfor %}
-<div>
-<h3> Location of Accident </h3>
-{{ location }} ==> {{ coordintae }}
-</div>
 
-{% endif %}
+
+
+
 
 <button type="button" id="plot-btn" class="btn btn-primary" onclick="plotLocation"> Plot Location </button>
 
+<div class="col-md-5"   >
 
-    <div id=map></div>
+    <div id=map>    </div>
 
-
-    <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 </div>
+</div>
+<button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 
+</div>
 {% endblock content %}
 
 {% block javascript %}

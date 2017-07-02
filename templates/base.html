@@ -11,7 +11,7 @@
     {% block css %}
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css"/>
-    
+
 
     <link rel="stylesheet" href="{% static "css/news.css" %}" type="text/css"/>
 
@@ -32,7 +32,7 @@
 </nav>
   </head>
 
-  <body onload= 'initialize()'>
+  <body >
   {% block content %}
 
   {% endblock content %}
@@ -43,186 +43,19 @@
 
     {% endblock javascript %}
   </body>
-<script>
-var map, marker, waypointByID = {};
-
-function initialize() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 6,
-        center: new google.maps.LatLng(27.7172453, 85.3239605),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-}
-
-{% for waypoint in waypoints %}
-waypointByID[{<h3>Date of Accident</h3>
-{{date}}{waypoint.id}}] = {
-    name: "{{waypoint.name}}",
-    lat: {{waypoint.geometry.y}},
-    lng: {{waypoint.geometry.x}}
-};
-
-{% endfor %}
-
-
-$(document).ready(function () {
-    function activateWaypoints() {
-        // Add waypoint click handler
-        $('.waypoint').each(function () {
-            $(this).click(function() {
-                var waypoint = waypointByID[this.id];
-                var center = new google.maps.LatLng(waypoint.lat, waypoint.lng);
-                if (marker) marker.setMap();
-                marker = new google.maps.Marker({map: map, position: center});
-                map.panTo(center);
-            }).hover(
-                function () {this.className = this.className.replace('OFF', 'ON');},
-                function () {this.className = this.className.replace('ON', 'OFF');}
-            );
-        });
-    }
-    activateWaypoints();
-
-
-});
-</script>
 
 
 
 
 <style>
     body {font-family: sans-serif}
-    #map {width: 800px; height: 900px}
+    #map {width: 350px; height: 350px}
     #waypoints {overflow: auto; width: 500px; height: 300px}
     .linkOFF {color: darkblue}
     .linkON {color: white; background-color: darkblue}
 
 </style>
-<script>
-function showAllWayPoints(){
-//   var x = 5;
-//   var y = 6;
-//   var z = 6+5;
-//
-// console.log(z);
 
-var locations = [
-     ['Bondi Beach', -33.890542, 151.274856, 4],
-     ['Coogee Beach', -33.923036, 151.259052, 5],
-     ['Cronulla Beach', -34.028249, 151.157507, 3],
-     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-     ['Maroubra Beach', -33.950198, 151.259302, 1]
-   ];
-
-// define the location from the dictionary
-var waypointByID = {};
-   {% for waypoint in waypoints %}
-   waypointByID[{{waypoint.id}}] = {
-       name: "{{waypoint.name}}",
-       lat: {{waypoint.geometry.y}},
-       lng: {{waypoint.geometry.x}}
-   };
-
-   {% endfor %}
-
-   var map = new google.maps.Map(document.getElementById('map'), {
-     zoom: 10,
-     // Nepal 27.7172453, 85.3239605
-     // Websit 55.755, 37.615
-     center: new google.maps.LatLng(27.7172453, 85.3239605),
-     mapTypeId: google.maps.MapTypeId.ROADMAP
-   });
-
-   var key,value,waypoint;
-   var marker;
-
-
-
-  //  $('.waypoint').each(function () {
-  //           this = $(this);
-  //          var waypoint = waypointByID[this];
-  //          marker = new google.maps.LatLng(waypoint.lat, waypoint.lng);
-  //          //console.log(waypointByID[waypoint.id]['name'])
-   //
-  //          map:map
-  //
-   //});
-   var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-      'sandstone rock formation in the southern part of the '+
-      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-      'south west of the nearest large town, Alice Springs; 450&#160;km '+
-      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-      'Aboriginal people of the area. It has many springs, waterholes, '+
-      'rock caves and ancient paintings. Uluru is listed as a World '+
-      'Heritage Site.</p>'+
-      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-      '(last visited June 22, 2009).</p>'+
-      '</div>'+
-      '</div>';
-
-
-   var infowindow = new google.maps.InfoWindow({ content: contentString });
-
-   var marker, i;
-
-   for (i = 12; i < 21; i++) {
-
-     marker = new google.maps.Marker({
-       position: new google.maps.LatLng(waypointByID[i]['lat'], waypointByID[i]['lng']),
-       map: map
-
-     });
-
-
-     google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-       return function() {
-         infowindow.setContent(waypointByID[i]['name']);
-         infowindow.open(map, marker);
-       }
-     })(marker, i));
-
-     google.maps.event.addListener(marker,'mouseout', (function (marker,i,infowindow) {
-       return function() {
-         infowindow.close();
-
-       }
-        })(marker,i,infowindow));
-
-      google.maps.event.addListener(marker,'click', (function (marker,i){
-        return function(){
-          var c = waypointByID[i]['lat'];
-          infowindow.setContent("You clicked " + waypointByID[i]['lat'] + " " + waypointByID[i]['lng']);
-          infowindow.open(map,marker);
-
-
-        }
-      })(marker,i));
-
-
-
-   }
-
-}
-
-
-
-</script>
-
-<script>
-
-document.getElementById('btn').onclick = function() {
- showAllWayPoints()
-
-};
-</script>
 
 
 </html>
