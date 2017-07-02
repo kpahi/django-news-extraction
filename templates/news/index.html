@@ -4,6 +4,9 @@
 
 {% block title %} News Information Extraciton {% endblock title %}
 
+{% block nav_index%}
+    class="active"
+{% endblock %}
 
 {% block content %}
 
@@ -16,10 +19,10 @@
     <h4> Current </h4>
   </div>
   <div class="panel-body">
-    <ul class="nav nav-tabs">
-      <li><a href="#item1" onclick="bikeAll('bike')"> Bike </a> </li>
-      <li><a href="#item2" onclick="bikeAll('bus')"> Bus </a> </li>
-      <li><a href="#item3" onclick="bikeAll('tipper')"> Tipper </a></li>
+    <ul class="nav nav-tabs" id="tabs">
+      <li><a href="#bike-accident" onclick="bikeAll('bike')"> Bike </a> </li>
+      <li><a href="#bus-accident" onclick="bikeAll('bus')"> Bus </a> </li>
+      <li><a href="#tipper-accident" onclick="bikeAll('tipper')"> Tipper </a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane fade in active">
@@ -44,14 +47,20 @@
   <div class="panel-body">
   </div>
     <div class="pre-scrollable">
+      <ul>
       {% for n in object_list %}
-      <a href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
-      <hr>
-      {% endfor %}
+      <li class='listed' style='list-style:none;' >
 
+      <a id="p1" data-html="true" data-toggle="popover" data-placement="top" title="Death: {{ n.death }} <br> Injury: {{ n.injury}}" data-content="<div><b>Example popover</b> - content</div>" href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
+
+
+    </li>
+      {% endfor %}
+    </ul>
     </div>
   </div>
 </div>
+
 </div>
 
 
@@ -59,11 +68,61 @@
 
 
 {% block javascript %}
+
+
+<style>
+
+.listed{
+
+  /*background-color: #8380116;*/
+  background-color: rgb(169, 210, 237);
+  padding: 5px;
+  border-radius: 15px;
+  margin: 5px;
+
+
+}
+
+</style>
+
+
 <script>
+
 $(document).ready(function() {
-  $(".nav-tabs a").click(function {
-    $(this).tab('show');
-  });
+  // $("#tabs").click(function {
+  //   $(this).tab('show');
+  // });
+
+
+  // $("#p1").mouseenter(function () {
+  //   alert("Direct call");
+  // });
+
+  $("[id='p1']").on('mouseenter',sel);
+  $("[id='p1']").on('mouseleave',dsel);
+
+  // $('[data-toggle="popover"]').popover({
+  //   title: 'just to make it works',
+  // });
+
+  function sel(){
+
+      $(this).animate({"padding-left": "50px"}, "normal");
+
+      $('[data-toggle="popover"]').popover({
+        title: 'just to make it works',
+      });
+
+  };
+  function dsel() {
+
+    $(this).stop(true).animate({"padding-left": "0px"}, "slow");
+
+
+  }
+
+
+
 
 
 
@@ -130,19 +189,22 @@ document.getElementById("demo").append("CCN");
     var i;
 
 
-    document.getElementById("demo").innerHTML = "";
-    var s;
+    document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
 
     for (i=0; i<arr.length;i++){
       var s= arr[i].url;
-      var mycode1 = "<a href='" + s + "'> ";
-      var mycode2 = "</a>";
+      var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + s + "' > ";
+      var mycode2 = "</a> </li>";
 
 
-     document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 + "<br>"  ;
+     document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 ;
+
    }
+   document.getElementById("demo").innerHTML += "</ul>";
 
   };
 
+  console.log("Hello");
+
 </script>
-{% endblock javascript %}}
+{% endblock javascript %}
