@@ -10,49 +10,35 @@ class=" nav-link active"
 
 <div class="container">
   <div class="row">
-
+  <div class="col-md-6">
 <form action="/news_ie/" method="post">
 {% csrf_token %}
 {{ form }}
  <input  class="btn btn-info" type="submit" value="Submit" />
 
 </form>
-</div>
+
 
 
 {% if sentences_dic %}
-<!--
-<div class="row">
-  <p>  Sentences in given news are : </p>
-</div>
-{% for key,value in sentences_dic.items %}
-
-<div>{{ key }} {{  value }}
-</div>
-{% endfor %}
--->
-
-<div class="row">
-<div class="col-md-6">
-
-<table>
+<table class="table">
   <tr>
-    <th scope="row"> <h3> Death </h3>  </th>
+    <th scope="row"> <h4> Death </h4>  </th>
     <td> {{ death }} </th>
 
   </tr>
   <tr>
     <th scope="row">
-      <h3> Injury Number </h3> </th>
+      <h4> Injury </h4> </th>
     <td> {{ injury }} <td>
     </tr>
   <tr>
-    <th scope="row"><h3> Date of Accident </h3></th>
+    <th scope="row"><h4> Date</h4></th>
     <td>   {{date}} </td>
   </tr>
 
   <tr>
-    <th>  <h3> Vehicles Involved in accident </h3> </th>
+    <th>  <h4> Vehicles</h4> </th>
     <td>
     {% for key,value in number_plate.items %}
     <div>
@@ -63,34 +49,30 @@ class=" nav-link active"
     {% endfor %}
   </td>
   </tr>
-
   <tr>
-    <th><h3> Location of Accident </h3> </th>
+    <th><h4>Day</h4> </th>
 
-  <td>  {{ location }} ==> {{ coordintae }}</td>
+  <td>  {{day}}</td>
 </tr>
 
+  <tr>
+    <th><h4> Location</h4> </th>
 
+  <td>  {{ location }}:{{ coordintae }}</td>
+</tr>
     {% endif %}
-
 </table>
-</div>
-
-
-
-
-
-
 <button type="button" id="plot-btn" class="btn btn-primary" onclick="plotLocation"> Plot Location </button>
-
-<div class="col-md-5"   >
-
-    <div id=map>    </div>
-
-</div>
-</div>
+<div id=map>    </div>
 <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 
+</div>
+<div class="col-md-6">
+  <p>Lorem ipsum...</p>
+  <li> news1</li>
+  <li> news2</li>
+</div>
+</div>
 </div>
 {% endblock content %}
 

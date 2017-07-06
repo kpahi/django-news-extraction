@@ -1,0 +1,50 @@
+.main-container{
+  padding:10px;
+  margin: auto;
+  width: 85%;
+}
+.container{
+  padding:10px;
+  margin: auto;
+}
+.page-header{
+  background: url('/static/img/main2.png');
+  height: 300px;
+  width: 100%;
+  margin: 0.  1px;
+}
+.page-header h1{
+  color: #fff;
+}
+ul{
+  list-style-type: none;
+}
+.nav li{
+  color: #fff;
+  display: inline;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  margin-right: 25px;
+  text-transform: uppercase;
+}
+.form-container{
+  width: 50%;
+}
+input{
+    width:50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+table td{
+  font-weight: bold;
+}
+body {font-family: sans-serif}
+#map {width: 100%; height: 350px; margin: 10px;}
+#waypoints {overflow: auto; width: 500px; height: 300px}
+.linkOFF {color: darkblue}
+.linkON {color: white; background-color: darkblue}

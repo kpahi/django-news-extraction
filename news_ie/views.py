@@ -13,6 +13,7 @@ from .extraction.getdeathinjury import *
 from .extraction.getnewlocation import geotraverseTree
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
+from .extraction.getday import get_day
 from .forms import NameForm
 from .geocoder import *
 from .models import News
@@ -89,6 +90,11 @@ def get_news(request):
             print(location)
             story.location = location
 
+            #Get day from the total sentence list
+            day = get_day(sentlist)
+            print(day)
+            story.day = day
+
             # from standford, dont forget to use ' '.join(location)
             # location = getlocation(splited_sen[0])
             # print(' '.join(location))
@@ -117,7 +123,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate,'day': day, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -237,9 +243,9 @@ def save_story(story, data):
         coefficient = similar_story(data['news_text'], s.body)
         sim.append(coefficient)
 
-    # print(sim)
+    print(sim)
     jacc_max = max(sim)
-    # print(jacc_max)
+    print(jacc_max)
 
     # set the threshold value to identify Duplicate
 

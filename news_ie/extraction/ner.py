@@ -2,8 +2,8 @@ from nltk.tag import StanfordNERTagger
 from nltk.tokenize import word_tokenize
 
 # Change the path according to your system
-stanford_classifier = '/home/kritish/Downloads/stanford-ner-2016-10-31/classifiers/english.all.3class.distsim.crf.ser.gz'
-stanford_ner_path = '/home/kritish/Downloads/stanford-ner-2016-10-31/stanford-ner.jar'
+stanford_classifier = '/home/basanta/stanford-ner-2016-10-31/classifiers/english.all.3class.distsim.crf.ser.gz'
+stanford_ner_path = '/home/basanta/stanford-ner-2016-10-31/stanford-ner.jar'
 
 
 # Creating Tagger Object
