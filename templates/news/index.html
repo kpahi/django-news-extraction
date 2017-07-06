@@ -90,9 +90,9 @@
 <script>
 
 $(document).ready(function() {
-  $("#tabs").click(function {
-    $(this).tab('show');
-  });
+  // $("#tabs").click(function {
+  //   $(this).tab('show');
+  // });
 
 
   // $("#p1").mouseenter(function () {
@@ -140,73 +140,72 @@ document.getElementById("demo").append("CCN");
 <script>
 
     function bikeAll(name) {
-     var i =0;
-     var arr = [];
-     var arr_bike=[];
-    var accidentNews={};
-  {% for news in object_list %}
-  console.log({{news.location}});
+         var i =0;
+         var arr = [];
+         var arr_bike=[];
+         var accidentNews={};
+          {% for news in object_list %}
+              accidentNews[{{news.id}}] = {
+             location : "{{ news.location }}",
+             death : "{{ news.death }}",
+             injury:"{{ news.injury}}",
+             vehicle_no:"{{ news.vehicle_no }}",
+             date:"{{ news.date }}",
+             url:"{{ news.get_absolute_url }}",
 
-   accidentNews[{{news.id}}] = {
-     location : "{{ news.location }}",
-     death : "{{ news.death }}",
-     injury:"{{ news.injury}}",
-     vehicle_no:"{{ news.vehicle_no }}",
-     date:"{{ news.date }}",
-     url:"{{ news.get_absolute_url }}",
-
-   };
+           };
 
 
-     {% for key,value in news.vehicle_no.items %}
+             {% for key,value in news.vehicle_no.items %}
 
-     {% if  key == "tipper"  %}
-      if (name == 'tipper'){
-        arr.push(accidentNews[{{ news.id }}]);
-      }
-
-
-     {% endif %}
-
-     {% if key == "bike" %}
-     if (name == 'bike'){
-     arr.push(accidentNews[{{ news.id }}]);
-   }
-     {% endif %}
-
-     {% if  key == "bus"  %}
-      if (name == 'bus'){
-        arr.push(accidentNews[{{ news.id }}]);
-      }
+             {% if  key == "tipper"  %}
+              if (name == 'tipper'){
+                arr.push(accidentNews[{{ news.id }}]);
+              }
 
 
-     {% endif %}
+             {% endif %}
 
-     {% endfor %}
+             {% if key == "bike" %}
+             if (name == 'bike'){
+             arr.push(accidentNews[{{ news.id }}]);
+           }
+             {% endif %}
 
-
-  {% endfor %}
-
-
-    var i;
-
-
-    document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
-
-    for (i=0; i<arr.length;i++){
-      var s= arr[i].url;
-      var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:red;' href='" + s + "' > ";
-      var mycode2 = "</a> </li>";
+             {% if  key == "bus"  %}
+              if (name == 'bus'){
+                arr.push(accidentNews[{{ news.id }}]);
+              }
 
 
-     document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 ;
+             {% endif %}
 
-   }
-   document.getElementById("demo").innerHTML += "</ul>";
+             {% endfor %}
 
-  };
 
-  console.log("Hello");
+          {% endfor %}
+
+
+        var i;
+
+
+        document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
+
+        for (i=0; i<arr.length;i++){
+          var s= arr[i].url;
+          var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + s + "' > ";
+          var mycode2 = "</a> </li>";
+
+
+         document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 ;
+
+       }
+       document.getElementById("demo").innerHTML += "</ul>";
+      console.log("Hello");
+
+  }
+
+
 
 </script>
 {% endblock javascript %}

@@ -17,9 +17,11 @@ class=" nav-link active"
  <input  class="btn btn-info" type="submit" value="Submit" />
 
 </form>
+</div>
 
 
 
+<div class="col-md-6">
 {% if sentences_dic %}
 <table class="table">
   <tr>
@@ -62,16 +64,14 @@ class=" nav-link active"
 </tr>
     {% endif %}
 </table>
+</div>
+
 <button type="button" id="plot-btn" class="btn btn-primary" onclick="plotLocation"> Plot Location </button>
 <div id=map>    </div>
 <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 
 </div>
-<div class="col-md-6">
-  <p>Lorem ipsum...</p>
-  <li> news1</li>
-  <li> news2</li>
-</div>
+
 </div>
 </div>
 {% endblock content %}
