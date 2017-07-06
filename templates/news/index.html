@@ -13,6 +13,7 @@
 
 
 <div class="container">
+<div class="row">
 <div class="col-md-6">
   <div class="panel-default">
   <div class="panel-heading">
@@ -60,7 +61,7 @@
     </div>
   </div>
 </div>
-
+</div>
 </div>
 
 
@@ -73,9 +74,9 @@
 <style>
 
 .listed{
-
-  /*background-color: #8380116;*/
+  background-color: #8380116;
   background-color: rgb(169, 210, 237);
+  color:#000;
   padding: 5px;
   border-radius: 15px;
   margin: 5px;
@@ -144,6 +145,7 @@ document.getElementById("demo").append("CCN");
      var arr_bike=[];
     var accidentNews={};
   {% for news in object_list %}
+  console.log({{news.location}});
 
    accidentNews[{{news.id}}] = {
      location : "{{ news.location }}",

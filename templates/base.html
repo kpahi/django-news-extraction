@@ -17,35 +17,13 @@
     <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css"/>
 
     <link rel="stylesheet" href="{% static "css/news.css" %}" type="text/css"/>
-
-    <style>
-    .page-header{
-      background: url({% static "img/main2.png" %} );
-      /*background-position: center;*/
-      height: 300px;
-      width: 1140px;
-      margin: 0.1px;
+    <link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css"/>
 
 
 
-    }
-    ul{
-      list-style-type: none;
-    }
-
-    .nav li{
-      color: #fff;
-      display: inline;
-      font-family: sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      margin-right: 25px;
-      text-transform: uppercase;
-    }
-    </style>
     {% endblock css %}
 
-    <div class="container">
+    <div class="main-container">
       <div class="page-header">
       <h1> News Information Extraction System </h1>
       </div>
@@ -53,9 +31,9 @@
       <nav class="navbar navbar-inverse bg-inverse">
 
         <ul class="nav">
-          <li {% block nav_index %}{% endblock %}><a style="color:white;" href="/news/" >Home</a></li>
-          <li {% block nav_index_e %}{% endblock %} ><a style="color:white;" href="/news_ie/" >Extraction</a></li>
-          <li><a style="color:white;"  href="#">About Us</a></li>
+          <li {% block nav_index %}{% endblock %}><a href="/news/" >Home</a></li>
+          <li {% block nav_index_e %}{% endblock %} ><a href="/news_ie/" >Extraction</a></li>
+          <li><a href="#">About Us</a></li>
         </ul>
 
     </nav>
@@ -74,19 +52,6 @@
 
     {% endblock javascript %}
   </body>
-
-
-
-
-<style>
-    body {font-family: sans-serif}
-    #map {width: 350px; height: 350px}
-    #waypoints {overflow: auto; width: 500px; height: 300px}
-    .linkOFF {color: darkblue}
-    .linkON {color: white; background-color: darkblue}
-
-</style>
-
 
 
 </html>
