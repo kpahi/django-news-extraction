@@ -213,3 +213,23 @@ var waypointByID = {};
 
 
 </html>
+
+{% for heading,story in headingdetail.items %}
+<ul>
+  <li>
+
+    {% if story.id is not None %}
+
+
+    <p id='yes' class="header">   <a href="#">{{ heading }}:</a> </p>
+
+    {% else %}
+
+    <p id='no' class="header"> {{ heading }} </p>
+
+    {% endif %}
+
+
+  </li>
+</ul>
+{% endfor %}

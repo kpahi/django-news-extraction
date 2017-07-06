@@ -6,7 +6,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {% block title %} NIEV {% endblock title %} </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google map
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  -->
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -23,7 +26,7 @@
       background: url({% static "img/main2.png" %} );
       /*background-position: center;*/
       height: 300px;
-      width: 1140px;
+      width: 1110px;
       margin: 0.1px;
 
 
@@ -33,7 +36,7 @@
       list-style-type: none;
     }
 
-    .nav li{
+    .navbar-nav li{
       color: #fff;
       display: inline;
       font-family: sans-serif;
@@ -41,6 +44,11 @@
       font-size: 12px;
       margin-right: 25px;
       text-transform: uppercase;
+    }
+
+    .navbar{
+      background-color: black;
+
     }
     </style>
     {% endblock css %}
@@ -50,15 +58,44 @@
       <h1> News Information Extraction System </h1>
       </div>
 
+
+
+
+      <nav class="navbar navbar-toggleable-md ">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a {% block nav_index_r %} {% endblock nav_index_r %} style="color:white;" href="/" >Home</a>
+            </li>
+            <li class="nav-item">
+              <a {% block nav_index %} {% endblock nav_index %} style="color:white;" href="/news/" >Database</a>
+            </li>
+            <li class="nav-item">
+              <a {% block nav_index_e %} {% endblock nav_index_e %} style="color:white;" href="/news_ie/" >Extraction</a>
+            </li>
+            <li class="nav-item">
+              <a style="color:white;"  href="#">About Us</a></li>
+            </li>
+          </ul>
+        </div>
+      </nav>
+<!--
       <nav class="navbar navbar-inverse bg-inverse">
 
-        <ul class="nav">
-          <li {% block nav_index %}{% endblock %}><a style="color:white;" href="/news/" >Home</a></li>
-          <li {% block nav_index_e %}{% endblock %} ><a style="color:white;" href="/news_ie/" >Extraction</a></li>
+        <ul class="navbar-nav">
+          <li {% block nav_indexy %} {% endblock nav_indexy %}><a style="color:white;" href="/news/" >Home</a></li>
+          <li {% block nav_indexy_e %} {% endblock nav_indexy_e %} ><a style="color:white;" href="/news_ie/" >Extraction</a></li>
           <li><a style="color:white;"  href="#">About Us</a></li>
         </ul>
 
     </nav>
+  -->
+  <br>
+
+
+</div>
+
+
   </div>
   </head>
 
