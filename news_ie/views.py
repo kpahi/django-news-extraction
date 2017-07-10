@@ -69,13 +69,25 @@ def get_news(request):
             # Get death count and injury count
 
             death = death_no(splited_sen)
+            if death =="None":
+                actualdeath = death
+                deathNo = 0
+            else:
+                actualdeath = remove_date(death)
+                deathNo = convertNum(death)
             print("Death No: ")
-            print(death)
+            print(death,actualdeath,deathNo)
             story.death = death
 
             injury = injury_no(splited_sen)
+            if injury =="None":
+                actualinjury ="None"
+                injuryNo = 0
+            else:
+                actualinjury = remove_date(injury)
+                injuryNo = convertNum(injury)
             print("Injury No:")
-            print(injury)
+            print(injury,actualinjury,injuryNo)
             story.injury = injury
 
             extdate = extract_date(sentlist)
@@ -123,7 +135,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate,'day': day, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate,'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath,"deathnum":deathNo,'injury': actualinjury,'injurynum':injuryNo, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -163,6 +175,7 @@ def extract_items(n):
     # Get death count and injury count
 
     death = death_no(splited_sen)
+    actualdeath = remove_date(death)
     print("Death No: ")
     print(death)
     # story.death = death
