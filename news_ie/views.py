@@ -9,11 +9,11 @@ from django.shortcuts import render
 from world.models import WayPoint
 
 from .extraction.getdate import extract_date
+from .extraction.getday import get_day
 from .extraction.getdeathinjury import *
 from .extraction.getnewlocation import geotraverseTree
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
-from .extraction.getday import get_day
 from .forms import NameForm
 from .geocoder import *
 from .models import News
@@ -90,7 +90,7 @@ def get_news(request):
             print(location)
             story.location = location
 
-            #Get day from the total sentence list
+            # Get day from the total sentence list
             day = get_day(sentlist)
             print(day)
             story.day = day
@@ -123,7 +123,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate,'day': day, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -133,7 +133,7 @@ def get_news(request):
 def extract_items(n):
     print(n)
     story = News()
-    # story.body = n
+    story.body = n
 
     #data['news'] = rep(data['news'])
 
@@ -158,14 +158,14 @@ def extract_items(n):
     # Get the vehicle no. Here number_plate is the dictionary
     number_plate = vehicle_no(splited_sen)
     print(number_plate)
-    # story.vehicle_no = number_plate
+    story.vehicle_no = number_plate
 
     # Get death count and injury count
 
     death = death_no(splited_sen)
     print("Death No: ")
     print(death)
-    # story.death = death
+    story.death = death
 
     try:
         injury = injury_no(splited_sen)
@@ -174,19 +174,19 @@ def extract_items(n):
 
     print("Injury No:")
     print(injury)
-    # story.injury = injury
+    story.injury = injury
 
     extdate = extract_date(sentlist)
     # print("Date:", extdate)
     s = extdate[0]
 
-    # story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
+    story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
 
     # Get location from 1st sentences list
     # from the classifier
     location = geotraverseTree(splited_sen[0])
     print(location)
-    # story.location = location
+    story.location = location
 
     # from standford, dont forget to use ' '.join(location)
     # location = getlocation(splited_sen[0])
@@ -213,9 +213,10 @@ def extract_items(n):
     # WayPoint(name=' '.join(location), geometry=gem).save()
     #
     # # Now save the story
-    # # story.save()
+    story.save()
     # save_story(story, data)
     #
+    return story
 
 
 # Try Jaccard coefficient

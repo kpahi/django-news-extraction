@@ -192,16 +192,60 @@ document.getElementById("demo").append("CCN");
         document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
 
         for (i=0; i<arr.length;i++){
+
           var s= arr[i].url;
           var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + s + "' > ";
           var mycode2 = "</a> </li>";
 
 
-         document.getElementById("demo").innerHTML += mycode1 + arr[i].vehicle_no + mycode2 ;
+          var j =(arr[i].vehicle_no);
+
+          var decJ= $('<textarea/>').html(j).text();
+          console.log(decJ);
+          var x = JSON.parse(JSON.stringify(decJ));
+          console.log(x);
+
+          //console.log(decJ);
+          // console.log(name);
+          // console.log(i);
+          var key = "'bus'";
+          console.log(decJ.key);
+          // var keys=[];
+          // for (var key in decJ){
+          //   keys.push(key);
+          // }
+          // alert(keys);
+
+          // console.log(Object.keys())
+          // for (var k in decJ){
+            // console.log( k);
+          // }
+
+
+
+
+          // var key="&#39;bus&#39;";
+          // console.log(key);
+          // console.log(j['bus']);
+
+          // var stringified = JSON.stringify(j);
+          // console.log("stringified "+ stringified);
+          //var json = JSON.parse(arr[i].vehicle_no);
+
+          //obj =JSON.parse(j);
+
+          // for (var k in j){
+          // //   //console.log(j[k]);
+          // document.getElementById("demo").innerHTML += mycode1 + j.value + mycode2 ;
+          // // //
+          // // //
+          // }
+
+
+         document.getElementById("demo").innerHTML += mycode1 + decJ   + mycode2 ;
 
        }
        document.getElementById("demo").innerHTML += "</ul>";
-      console.log("Hello");
 
   }
 

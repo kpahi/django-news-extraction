@@ -59,13 +59,20 @@ def index(request):
 
         else:
             print("Extraction Requires")
-            story = News.objects.none()
+            print("Extracting:")
+            story = extract_items(n)
+
             newsStory.append(story)
+            print("Extracting complete:")
+
+            # story = News.objects.none()
+            # newsStory.append(story)
             # newsStory[i] = "Extractions"
             # extract_items(n)
 
     # print(len(headings))
     # print(len(newsStory))
+    # This line is main
     headingDetail = dict(zip(headings, newsStory))
 
     return render_to_response('rss/index.html', {

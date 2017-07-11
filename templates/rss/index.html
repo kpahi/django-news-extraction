@@ -13,18 +13,23 @@
   <div class="row"><!--row-->
     <div class="col-md-6">
       <h2> RSS News </h2>
+      <div class="pre-scrollable">
+
 
       {% for heading,story in headingdetail.items %}
       <ul>
-        <li>
+        <li class='listed' style='list-style:none;'>
 
           {% if story.id is not None %}
 
 
           <p id={{ story.id }} class="head">   <a href="#">{{ heading }}:</a> </p>
+          <p><small> {{ story.location }} <br> {{ story.slug }}</small> </p>
+        </li>
 
           {% else %}
 
+          <li  class='listed' style='list-style:none;'>
           <p id='no' > <a href="#"> {{ heading }}</a> </p>
 
           {% endif %}
@@ -33,6 +38,7 @@
         </li>
       </ul>
       {% endfor %}
+    </div>
 
 
     </div>
@@ -54,7 +60,21 @@
 
 {% endblock content %}
 
+
+
 {% block javascript %}
+<style>
+
+.listed{
+
+  background-color: rgb(169, 210, 237);
+  color:#000;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+</style>
 
 <script>
 $(document).ready(function(){
@@ -94,7 +114,7 @@ $(document).ready(function(){
 
         // alert("Hello each " + news.location );
         //$('#summary').replaceWith("<h2 id='summary'>  " +  news.death , news.location  + "</h2>");
-        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p>Location: " + news.location +"</p></div>");
+        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p></div>");
 
     //
     // function summary_info() {
