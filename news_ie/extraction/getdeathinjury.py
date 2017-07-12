@@ -71,6 +71,8 @@ def injury_no(sentlist):
 
 
 def convertNum(toconvert):
+
+    toconvert = toconvert.lower()
     intconvert = text2int(toconvert)
     if intconvert.split() == toconvert.split():
         death_no = 1
@@ -81,10 +83,12 @@ def convertNum(toconvert):
         deathdigit = [int(s) for s in intconvert.split() if s.isdigit()]
         # print(deathdigit)
         for i in deathdigit:
+
             if i > 1900:
                 point = checklist.index(str(i))
                 checklist = checklist[point + 1:]
-                deathdigit = deathdigit[point + 1:]
+                dpoint = deathdigit.index(i)
+                deathdigit = deathdigit[dpoint + 1:]
                 # print(checklist)
                 break
         if deathdigit == []:
