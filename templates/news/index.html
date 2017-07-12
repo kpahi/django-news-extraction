@@ -350,7 +350,9 @@ $("#datebtn").click(function () {
        accidentNews[{{news.id}}] = {
       location : "{{ news.location }}",
       death : "{{ news.death }}",
+      death_no: "{{ news.death_no}}",
       injury:"{{ news.injury}}",
+      injury_no:"{{ news.injury_no}}",
       vehicle_no:"{{ news.vehicle_no }}",
       date:"{{ news.date }}",
       url:"{{ news.get_absolute_url }}",

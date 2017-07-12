@@ -63,6 +63,7 @@ def injury_no(sentlist):
                                 if dic[text] in injuryverb:
                                     if "A0" in dic:
                                         injury = dic["A0"]
+                                        # This indentation was backward
                                     else:
                                         injury = dic["A1"]
         else:

@@ -90,7 +90,9 @@ $(document).ready(function(){
     accidentNews[{{news.id}}] = {
     location : "{{ news.location }}",
     death : "{{ news.death }}",
+    death_no : "{{ news.death_no }}",
     injury:"{{ news.injury}}",
+    injury_no:"{{ news.injury_no}}",
     vehicle_no:"{{ news.vehicle_no }}",
     date:"{{ news.date }}",
     url:"{{ news.get_absolute_url }}",
@@ -127,7 +129,7 @@ $(document).ready(function(){
 
         // alert("Hello each " + news.location );
         //$('#summary').replaceWith("<h2 id='summary'>  " +  news.death , news.location  + "</h2>");
-        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day: "+ news.day +"</p></div>");
+        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Death Number: " + news.death_no +  "</p><p> Injury: " + news.injury +"</p><p> Injury Number: " + news.injury_no +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day: "+ news.day +"</p></div>");
 
     //
     // function summary_info() {
