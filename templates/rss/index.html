@@ -94,6 +94,7 @@ $(document).ready(function(){
     vehicle_no:"{{ news.vehicle_no }}",
     date:"{{ news.date }}",
     url:"{{ news.get_absolute_url }}",
+    day:"{{ news.day }}",
 
     };
 
@@ -111,10 +112,22 @@ $(document).ready(function(){
       $(this).click(function(){
 
         var news = accidentNews[this.id];
+        var vehicle = news.vehicle_no;
+        var decVehicle= $('<textarea/>').html(vehicle).text();
+
+        var v = decVehicle.replace(/\'/g, '"');
+        // alert(v);
+        // alert(JSON.stringify(v));
+        var jsonObject = JSON.parse((v));
+        // alert(jsonObject);
+        // alert(decVehicle);
+        // for (var key in jsonObject){
+        //   // alert(jsonObject['tipper']);
+        // }
 
         // alert("Hello each " + news.location );
         //$('#summary').replaceWith("<h2 id='summary'>  " +  news.death , news.location  + "</h2>");
-        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p></div>");
+        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day: "+ news.day +"</p></div>");
 
     //
     // function summary_info() {

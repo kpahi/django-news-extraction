@@ -36,9 +36,10 @@ def get_news(request):
 
         if form.is_valid():
             data = form.cleaned_data
-            extract_items(data['news_text'])
+            # extract_items(data['news_text'])
 
             story = News()
+
             story.body = data['news_text']
 
             #data['news'] = rep(data['news'])
@@ -52,16 +53,16 @@ def get_news(request):
             sentclass = sentences()
             sentlist = sentclass.split_into_sentences(data['news_text'])
             splited_sen = []
-            # print each sentences
-            # print("\n" + "After Spliting " + "\n")
+            # # print each sentences
+            # # print("\n" + "After Spliting " + "\n")
             for sent in sentlist:
                 splited_sen.append(sent)
-                # print(sent + "\n")
-
+            #     # print(sent + "\n")
+            #
             sentences_dic = dict((i, splited_sen[i]) for i in range(0, len(splited_sen)))
-            # print(sentences_dic)
-
-            # Get the vehicle no. Here number_plate is the dictionary
+            # # print(sentences_dic)
+            #
+            # # Get the vehicle no. Here number_plate is the dictionary
             number_plate = vehicle_no(splited_sen)
             print(number_plate)
             story.vehicle_no = number_plate
@@ -69,13 +70,25 @@ def get_news(request):
             # Get death count and injury count
 
             death = death_no(splited_sen)
+            if death == "None":
+                actualdeath = death
+                deathNo = 0
+            else:
+                actualdeath = remove_date(death)
+                deathNo = convertNum(death)
             print("Death No: ")
-            print(death)
+            print(death, actualdeath, deathNo)
             story.death = death
 
             injury = injury_no(splited_sen)
+            if injury == "None":
+                actualinjury = "None"
+                injuryNo = 0
+            else:
+                actualinjury = remove_date(injury)
+                injuryNo = convertNum(injury)
             print("Injury No:")
-            print(injury)
+            print(injury, actualinjury, injuryNo)
             story.injury = injury
 
             extdate = extract_date(sentlist)
@@ -123,7 +136,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': death, 'injury': injury, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -163,21 +176,31 @@ def extract_items(n):
     # Get death count and injury count
 
     death = death_no(splited_sen)
+    if death == "None":
+        actualdeath = death
+        deathNo = 0
+    else:
+        actualdeath = remove_date(death)
+        deathNo = convertNum(death)
     print("Death No: ")
-    print(death)
+    # print(death, actualdeath, deathNo)
     story.death = death
+    story.death_no = deathNo
 
-    try:
-        injury = injury_no(splited_sen)
-    except Exception:
-        injury = "None"
-
+    injury = injury_no(splited_sen)
+    if injury == "None":
+        actualinjury = "None"
+        injuryNo = 0
+    else:
+        actualinjury = remove_date(injury)
+        injuryNo = convertNum(injury)
     print("Injury No:")
-    print(injury)
+    # print(injury, actualinjury, injuryNo)
     story.injury = injury
+    story.injury_no = injuryNo
 
-    extdate = extract_date(sentlist)
-    # print("Date:", extdate)
+    extdate = extract_date(splited_sen)
+    print("Date:", extdate)
     s = extdate[0]
 
     story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
@@ -187,6 +210,11 @@ def extract_items(n):
     location = geotraverseTree(splited_sen[0])
     print(location)
     story.location = location
+
+    # Get day from the total sentence list
+    day = get_day(sentlist)
+    print(day)
+    story.day = day
 
     # from standford, dont forget to use ' '.join(location)
     # location = getlocation(splited_sen[0])
@@ -244,9 +272,9 @@ def save_story(story, data):
         coefficient = similar_story(data['news_text'], s.body)
         sim.append(coefficient)
 
-    print(sim)
+    # print(sim)
     jacc_max = max(sim)
-    print(jacc_max)
+    # print(jacc_max)
 
     # set the threshold value to identify Duplicate
 

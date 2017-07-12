@@ -17,17 +17,21 @@
   <div class="row">
   <div class="col-md-6">
     <div class="panel-default">
-    <div class="panel-heading">
-      <h4> Current </h4>
+    <div class="panel-heading" style="color:#fff;">
+      <h4> Accident Vehicles </h4>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs" id="tabs">
         <li><a href="#bike-accident" onclick="bikeAll('bike')"> Bike </a> </li>
+        <li><a href="#scooter-accident" onclick="bikeAll('scooter')"> Scooter </a> </li>
+        <li><a href="#four-whieeler-accident" onclick="bikeAll('four-wheeler')"> Four Wheeler </a> </li>
+
+
         <li><a href="#bus-accident" onclick="bikeAll('bus')"> Bus </a> </li>
         <li><a href="#tipper-accident" onclick="bikeAll('tipper')"> Tipper </a></li>
       </ul>
       <div class="tab-content">
-        <h3 id="demo" > Click one of the view <br> </h3>
+        <h3 id="demo" > Select the Accident vehicle you want to list.<br> </h3>
 
 
       </div>
@@ -37,13 +41,48 @@
 
 
   </div>
+  <!--
+  <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+      <span></span> <b class="caret"></b>
+  </div>
+-->
+
+<!-- For Date -->
+<div class="panel-default">
+<div class="panel-heading" style="color:#fff;">
+  <h4> Accidents By Dates </h4>
+</div>
+<div class="panel-body">
+
+
+    <small>
+    <p> Pick up a Range of Date you would like to see </p>
+  </small>
+  <input id='reportrange' placeholder="Select Date"/>
+
+  <button type="submit" id="datebtn">Check</button>
+
+  <div>
+    <h4 id="demo2" > Please Pick Up Date<br> </h4>
+  </div>
+
+
+</div>
+
+
+</div>
+
+
+
 
 </div>
 
 <div class="col-md-6">
   <div class="panel-default">
-  <div class="panel-heading text-center panel-relative">
-    <h4> News </h4>
+  <div class="panel-heading" style="color:#fff;">
+    <h4> Accident Sorted by location </h4>
+    <h2> {{ name }} </h2>
   </div>
   <div class="panel-body">
   </div>
@@ -51,9 +90,9 @@
       <ul>
       {% for n in object_list %}
       <li class='listed' style='list-style:none;' >
-
+        <h4>
       <a id="p1" data-html="true" data-toggle="popover" data-placement="top" title="Death: {{ n.death }} <br> Injury: {{ n.injury}}" data-content="<div><b>Example popover</b> - content</div>" href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
-
+    </h4>
 
     </li>
       {% endfor %}
@@ -64,13 +103,21 @@
 </div><!-- row -->
 
 
-</div>
 
 
 {% endblock content %}
 
 
 {% block javascript %}
+
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 
 <style>
@@ -84,7 +131,47 @@
   margin: 5px;
 }
 
+.panel-heading{
+
+  color: #fff;
+
+}
+
+
 </style>
+
+<script type="text/javascript">
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+    // var range=$("#reportrange").daterangepicker("getRange");
+    // $("#range_start").val(range['start']);
+    // $("#range_end").val(range['end']);
+
+
+});
+</script>
 
 
 <script>
@@ -121,20 +208,10 @@ $(document).ready(function() {
 
 
   }
-
-
-
-
-
-
-
-
-
-document.getElementById("demo").append("CCN");
-
-
 });
 </script>
+
+
 
 
 <script>
@@ -180,6 +257,22 @@ document.getElementById("demo").append("CCN");
 
              {% endif %}
 
+             {% if  key == "scooter"  %}
+              if (name == 'scooter'){
+                arr.push(accidentNews[{{ news.id }}]);
+              }
+
+
+             {% endif %}
+
+             {% if  key == "four-wheeler" or key == "van" %}
+              if (name == 'four-wheeler'){
+                arr.push(accidentNews[{{ news.id }}]);
+              }
+
+
+             {% endif %}
+
              {% endfor %}
 
 
@@ -194,55 +287,39 @@ document.getElementById("demo").append("CCN");
         for (i=0; i<arr.length;i++){
 
           var s= arr[i].url;
-          var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + s + "' > ";
-          var mycode2 = "</a> </li>";
+          var mycode1 = "<li class='listed' style='list-style:none;'> <h4> <a style='color:black;' href='" + s + "' > ";
+          var mycode2 = "</a></h4> </li>";
 
 
           var j =(arr[i].vehicle_no);
 
           var decJ= $('<textarea/>').html(j).text();
-          console.log(decJ);
-          var x = JSON.parse(JSON.stringify(decJ));
-          console.log(x);
+          // console.log(decJ);
+          // var x = JSON.parse(JSON.stringify(decJ));
+          // console.log(x);
+
+          var v = decJ.replace(/\'/g, '"');
+          // alert(v);
+          // alert(JSON.stringify(v));
+          var jsonObject = JSON.parse((v));
+          // alert(jsonObject);
+          // alert(decVehicle);
+
+          for (var key in jsonObject){
+            // alert(key +"->"+jsonObject[key]);
+            var n = jsonObject[name];
+
+          }
 
           //console.log(decJ);
           // console.log(name);
           // console.log(i);
-          var key = "'bus'";
-          console.log(decJ.key);
+          // var key = "'bus'";
+          // console.log(decJ.key);
           // var keys=[];
-          // for (var key in decJ){
-          //   keys.push(key);
-          // }
-          // alert(keys);
-
-          // console.log(Object.keys())
-          // for (var k in decJ){
-            // console.log( k);
-          // }
 
 
-
-
-          // var key="&#39;bus&#39;";
-          // console.log(key);
-          // console.log(j['bus']);
-
-          // var stringified = JSON.stringify(j);
-          // console.log("stringified "+ stringified);
-          //var json = JSON.parse(arr[i].vehicle_no);
-
-          //obj =JSON.parse(j);
-
-          // for (var k in j){
-          // //   //console.log(j[k]);
-          // document.getElementById("demo").innerHTML += mycode1 + j.value + mycode2 ;
-          // // //
-          // // //
-          // }
-
-
-         document.getElementById("demo").innerHTML += mycode1 + decJ   + mycode2 ;
+         document.getElementById("demo").innerHTML += mycode1 +name +" : "+ n + " @ "+ arr[i].location+ mycode2 ;
 
        }
        document.getElementById("demo").innerHTML += "</ul>";
@@ -250,6 +327,88 @@ document.getElementById("demo").append("CCN");
   }
 
 
+
+
+
+</script>
+
+<script>
+$("#datebtn").click(function () {
+  var reportrange = $("#reportrange").val();
+  var startdate = new Date(reportrange.split('-')[0]);
+  var enddate = new Date(reportrange.split('-')[1]);
+
+  // var converted = new Date(startdate);
+
+  var news_arr = [];
+  var news_id =[];
+
+  // alert("StartDate: "+ startdate + "EndDate: "+ enddate);
+  var accidentNews={};
+
+   {% for news in object_list %}
+       accidentNews[{{news.id}}] = {
+      location : "{{ news.location }}",
+      death : "{{ news.death }}",
+      injury:"{{ news.injury}}",
+      vehicle_no:"{{ news.vehicle_no }}",
+      date:"{{ news.date }}",
+      url:"{{ news.get_absolute_url }}",
+
+    };
+
+    news_id.push({{news.id}});
+
+    // var length = Object.keys(accidentNews).length;
+
+
+    {% endfor %}
+
+    // console.log(news_id);
+    for (var j = 0; j<news_id.length; j++){
+      var id = news_id[j]
+      var news = accidentNews[id];
+      // console.log(news.date);
+      var date = new Date(news.date);
+
+      if( date > startdate ){
+        if (date < enddate){
+          news_arr.push(news);
+
+
+        }
+      }
+
+    }
+    // var id=news_id[1];
+    // var n = accidentNews[id];
+    // console.log(n.date);
+
+    var i;
+    document.getElementById("demo2").innerHTML = "<ul style='list-style:none;'>";
+    for(i=0; i<news_arr.length;i++){
+
+      var s= news_arr[i].url;
+      var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + s + "' > ";
+      var mycode2 = "</a> </li>";
+
+      var j = news_arr[i].date;
+      var l = news_arr[i].location;
+      document.getElementById("demo2").innerHTML += mycode1 + j +" @ "+ l + mycode2 ;
+
+
+    }
+
+    document.getElementById("demo2").innerHTML += "</ul>";
+
+  // var news = accidentNews[2];
+  // var date = new Date(news.date);
+  // alert("Date:" + date);
+
+  // alert("Date:"+  news.date);
+  //alert(accidentNews[2].body);
+
+});
 
 </script>
 {% endblock javascript %}

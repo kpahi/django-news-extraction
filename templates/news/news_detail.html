@@ -9,16 +9,80 @@
 
 
 <div class="container">
-<div class="col-md-6">
-  <h2>Full News: </h2>
-  {{ object.body}}
-  <br>
-  <br>
-  <h2> Location: </h2>   {{ object.location }}  <br>
-  <h2> Death: </h2>   {{ object.death}}   <br>
-  <h2> Injury: </h2>    {{ object.injury}} <br>
-</div>
+  <div class="row">
+    <div class="col-md-6"><h2> Full News: </h2>
+      {{ object.body }}
+    </div>
+
+    <div col="col-md-6">
+      <p id='summary'> Click on one of the news </p>
+    </div>
+
+  <!--
+  <div class="col-md-6">
+    <h2>Full News: </h2>
+    {{ object.body}}
+  </div>
+  <div class="col-md-6">
+    <br>
+    <br>
+    <h2> Death: </h2>   {{ object.death}}   <br>
+    <h2> Injury: </h2>    {{ object.injury}} <br>
+    <h2> Location: </h2>   {{ object.location }}  <br>
+
+  </div>
+-->
+</div> <!--row-->
+
 </div>
 
 
 {% endblock content %}
+
+{% block javascript %}
+<script>
+$(document).ready(function(){
+
+  function present_summary(){
+    var accidentNews ={};
+
+    accidentNews[{{object.id}}] = {
+    location : "{{ object.location }}",
+    death : "{{ object.death }}",
+    injury:"{{ object.injury}}",
+    vehicle_no:"{{ object.vehicle_no }}",
+    date:"{{ object.date }}",
+    url:"{{ object.get_absolute_url }}",
+    day:"{{ object.day }}",
+
+    };
+
+
+
+        var news = accidentNews[{{object.id}}];
+        var vehicle = news.vehicle_no;
+        var decVehicle= $('<textarea/>').html(vehicle).text();
+
+        var v = decVehicle.replace(/\'/g, '"');
+        // alert(v);
+        // alert(JSON.stringify(v));
+        var jsonObject = JSON.parse((v));
+        // alert(jsonObject);
+        // alert(decVehicle);
+        // for (var key in jsonObject){
+        //   var vehicle = jsonObject[key];
+        //   // alert(jsonObject['tipper']);
+        // }
+
+        console.log({{object.id}});
+
+        $('#summary').replaceWith("<div id='summary'><h2> Extracted items </h2> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day:  "+ news.day +"</p></div>");
+
+  }
+  present_summary();
+
+});
+
+</script>
+
+{% endblock javascript %}

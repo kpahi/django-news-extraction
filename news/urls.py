@@ -7,5 +7,6 @@ urlpatterns = [
     # url(r'^$', views.index, name='index'),
     url(r'^$', NewsListView.as_view(), name='news-list'),
     url(r'^(?P<slug>[-\w]+)/$', NewsDetailView.as_view(), name='news-detail'),
+    url(r'^bydate', views.get_req, name='date'),
 
 ]
