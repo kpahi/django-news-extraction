@@ -144,7 +144,7 @@ def get_news(request):
 
 
 def extract_items(n):
-    print(n)
+    # print(n)
     story = News()
     story.body = n
 
@@ -184,7 +184,7 @@ def extract_items(n):
         deathNo = convertNum(death)
     print("Death No: ")
     # print(death, actualdeath, deathNo)
-    story.death = death
+    story.death = actualdeath
     story.death_no = deathNo
 
     injury = injury_no(splited_sen)
@@ -196,7 +196,7 @@ def extract_items(n):
         injuryNo = convertNum(injury)
     print("Injury No:")
     # print(injury, actualinjury, injuryNo)
-    story.injury = injury
+    story.injury = actualinjury
     story.injury_no = injuryNo
 
     extdate = extract_date(splited_sen)
