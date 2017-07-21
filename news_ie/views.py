@@ -136,7 +136,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location,'lat':lat,'lng':lng, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 

@@ -24,9 +24,10 @@ ul{
   color: #fff;
   display: inline;
   font-family: sans-serif;
-  font-weight: 900; !important
+  font-weight: 900;
   font-size: 12px;
   text-transform: uppercase;
+  padding:10px;
 }
 .form-container{
   width: 50%;
