@@ -19,14 +19,15 @@
 ul{
   list-style-type: none;
 }
+
 .nav li{
   color: #fff;
   display: inline;
   font-family: sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  margin-right: 25px;
+  font-weight: 900;
+  font-size: 12px;
   text-transform: uppercase;
+  padding:10px;
 }
 .form-container{
   width: 50%;
@@ -43,6 +44,13 @@ input[type=text]:focus {
 table td{
   font-weight: bold;
 }
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 1px 1px;
+}
+
+
 body {font-family: sans-serif}
 #map {width: 100%; height: 350px; margin: 10px;}
 #waypoints {overflow: auto; width: 500px; height: 300px}

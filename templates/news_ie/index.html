@@ -70,14 +70,15 @@ class=" nav-link active"
   <tr>
     <th><h4> Location</h4> </th>
 
-  <td>  {{ location }}:{{ coordintae }}</td>
+  <td>  {{ location }}:{{ coordintae}}</td>
 </tr>
     {% endif %}
 </table>
 </div>
+<button type="button" id="plot-btn" class="btn btn-primary" onclick="plotLocation({{lat}},{{lng}})"> Plot Location </button>
 
-<button type="button" id="plot-btn" class="btn btn-primary" onclick="plotLocation"> Plot Location </button>
 <div id=map>    </div>
+
 <button type="button" id="btn" class="btn btn-primary" onclick="showAllWayPoints()">Show all Waypoints</button>
 
 </div>
@@ -99,21 +100,37 @@ var map = new google.maps.Map(document.getElementById('map'), {
   center: new google.maps.LatLng(27.7172453, 85.3239605),
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
+function plotLocation(a,b)
+{
+  console.log(a);
+  console.log(b);
+  console.log("hello");
+  // var uluru = {lat:{{lat}}, lng: {{lng}}};
+  var uluru = {lat:27, lng:85};
 
-// marker = new google.maps.Marker({
-//   position: new google.maps.LatLng(location_coordinates[0], location_coordinates[1]),
-//   map: map
-//
-// });
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    // Nepal 27.7172453, 85.3239605
+    // Websit 55.755, 37.615
+    center: uluru,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+  marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+
+  });
+}
+
 
 </script>
 
 
 <script>
 
-document.getElementById('plot-btn').onclick = function() {
- plotLocation()
+// document.getElementById('plot-btn').onclick = function() {
+//  plotLocation()
 
-};
+// };
 </script>
 {% endblock javascript %}

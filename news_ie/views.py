@@ -136,7 +136,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location,'lat':lat,'lng':lng, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -144,7 +144,7 @@ def get_news(request):
 
 
 def extract_items(n):
-    print(n)
+    # print(n)
     story = News()
     story.body = n
 
@@ -184,7 +184,7 @@ def extract_items(n):
         deathNo = convertNum(death)
     print("Death No: ")
     # print(death, actualdeath, deathNo)
-    story.death = death
+    story.death = actualdeath
     story.death_no = deathNo
 
     injury = injury_no(splited_sen)
@@ -196,7 +196,7 @@ def extract_items(n):
         injuryNo = convertNum(injury)
     print("Injury No:")
     # print(injury, actualinjury, injuryNo)
-    story.injury = injury
+    story.injury = actualinjury
     story.injury_no = injuryNo
 
     extdate = extract_date(splited_sen)
