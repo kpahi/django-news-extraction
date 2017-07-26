@@ -26,7 +26,7 @@ sentence = "A biker died after being hit by a tractor at Sundar Haraicha Municip
 
 def geotraverseTree(sentence):
     # sentence = 'Two pedestrians were fatally hit by vehicles in assorted locations of Kathmandu valley on Thursday, police said.'
-    """The deceased has been identified as Shyam Karki, 32, of Kerabari Rural Municipality-9 of the district."""
+    # """The deceased has been identified as Shyam Karki, 32, of Kerabari Rural Municipality-9 of the district."""
     # print(sentence)
     p = subprocess.Popen([script, sentence], stdout=PIPE, stderr=PIPE)
     stdout, stderr = p.communicate()
@@ -38,12 +38,16 @@ def geotraverseTree(sentence):
     # transform string type output into nltk tree
     t = nltk.tree.Tree.fromstring(output)
     leaf = []
+    lst= []
     for subtree in t:
         if type(subtree) == nltk.tree.Tree:
             if(subtree.label() == "geo"):  # extract geo marked subtree
                 leaf = ''.join(subtree.leaves())
                 lst = leaf.split("/")
-    loc = lst[0]
+    if not lst:
+        loc = "None"
+    else:
+        loc = lst[0]
     # print(loc)
     # print("The Extracted location {}".format(lst[0]))
     return loc

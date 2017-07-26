@@ -4,7 +4,7 @@
 
 {% block title %} News Information Extraciton {% endblock title %}
 
-{% block nav_index_r %}
+{% block nav_index_rs %}
     class=" nav-link active"
 {% endblock %}
 
@@ -16,7 +16,7 @@
       <div class="pre-scrollable">
 
 
-      <!-- {% for heading,story in headingdetail.items %}
+      {% for heading,story in headingdetail.items %}
       <ul>
         <li class='listed' style='list-style:none;'>
 
@@ -37,18 +37,11 @@
 
         </li>
       </ul>
-      {% endfor %} -->
-      {% for article in object_list%}
-      <ul>
-        <li class='listed' style='list-style:none;'>
-          <p id={{ article.id }} class="head">   <a href="#">{{article.header}}:</a> </p>
-        </li>
-      </ul>
       {% endfor %}
+    </div>
+
 
     </div>
-  </div>
-
 
     <div class="col-md-6">
       <h2> Extracted items </h2>
@@ -84,17 +77,12 @@
 </style>
 
 <script>
-// function css()
-// {
-//   $('.load').css("display", "block");
-// }
-
 $(document).ready(function(){
-console.log("hello");
+
   function present_summary(){
     var accidentNews ={};
 
-    {% for news in object_list %}
+    {% for news in newsstory %}
 
     {% if news.id is not None %}
 
