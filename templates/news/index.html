@@ -16,7 +16,7 @@
   <br>
   <div class="row">
   <div class="col-md-6">
-    <div class="panel-default">
+    <!-- <div class="panel-default">
     <div class="panel-heading" style="color:#fff;">
       <h4> Accident by Vehicles </h4>
     </div>
@@ -37,11 +37,11 @@
 
     </div>
 
-  </div>
+  </div> -->
   <!--
   <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
       <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-      <span></span> <b class="caret"></b>
+      <span></spaNews.objects.raw('SELECT COUNT(location) as loc,SUM(id) as id FROM news_ie_news GROUP BY location ORDER BY location ASC')n> <b class="caret"></b>
   </div>
 -->
 
@@ -78,14 +78,14 @@
   <div class="panel-default">
   <div class="panel-heading" style="color:#fff;">
     <div class="nav-item"><h4> Accident Sorted by location </h4>
-    <h2> {{ name }} </h2>
+    <!-- <h2> {{ name }} </h2> -->
   </div>
 </div>
   <div class="panel-body">
   </div>
-    <div class="pre-scrollable">
+    <!-- <div class="pre-scrollable">
       <ul>
-      {% for n in object_list %}
+      {% for n in news %}
       <li class='listed' style='list-style:none;' >
         <h4>
       <a id="p1" data-html="true" data-toggle="popover" data-placement="top" title="Death: {{ n.death }} <br> Injury: {{ n.injury}}" data-content="<div><b>Example popover</b> - content</div>" href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
@@ -94,12 +94,31 @@
     </li>
       {% endfor %}
     </ul>
-    </div>
+    </div> -->
+    <p>
+    {% for obj in news %}
+     <a href="#">{{obj.location}} <span class="badge">{{obj.loc}}</span></a>
+     <!-- <button type="button" class="btn btn-primary">{{obj.location}} <span class="badge">{{obj.loc}}</span></button> -->
+      {% endfor %}
+    </p>
   </div>
 </div>
 </div><!-- row -->
 
 
+
+<div class="col-md-6">
+  <div class="panel-default">
+  <div class="panel-heading" style="color:#fff;">
+    <div class="nav-item"><h4> Accident Sorted by Vehicles</h4>
+  </div>
+</div>
+{% for obj,item in vehicle.items %}
+<button type="button" class="btn btn-primary">{{obj}} <span class="badge">{{item}}</span></button>
+{% endfor %}
+
+</div>
+</div>
 
 
 {% endblock content %}
@@ -136,7 +155,22 @@
 
 
 </style>
+<script type = "text/javascript">
+function test()
+{
+  console.log("hello");
+  var vecjson={};
+  var keey="asks";
+  {% for vec in vehicle %}
+    {% for key,value in vec.vehicle_no.items %}
+    keey = String({{key}})
+    $('#summary').replaceWith("<div id='summary'>"+keey+"</p></div>");
+    {% endfor %}
+    {% endfor %}
 
+}
+
+</script>
 <script type="text/javascript">
 $(function() {
 
@@ -169,7 +203,6 @@ $(function() {
 
 });
 </script>
-
 
 <script>
 
@@ -212,6 +245,7 @@ $(document).ready(function() {
 
 
 <script>
+
 
     function bikeAll(name) {
          var i =0;

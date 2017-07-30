@@ -5,6 +5,7 @@ from news_ie.views import extract_items, similar_story
 from rss.get_news import get_data_from_rss, rss, testaccidentnews
 from rssdb.models import rssdata
 from django.views.generic.list import ListView
+from django.shortcuts import render
 
 
 

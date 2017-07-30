@@ -8,6 +8,8 @@ from rssdb.models import rssdata
 from django.views.generic.list import ListView
 
 from .get_news import get_data_from_rss, rss, testaccidentnews
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -95,6 +97,8 @@ def index(request):
 class RssListView(ListView):
     model = rssdata
     template_name = 'rss/index.html'
+    paginate_by = 3
+
     # form = NewsFilterForm
 
     # def get_date(request):
@@ -103,6 +107,5 @@ class RssListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(RssListView, self).get_context_data(**kwargs)
         context['rssdb'] = rssdata.objects.all()
-        # context['form'] = NewsFilterForm
 
         return context
