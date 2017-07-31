@@ -95,15 +95,36 @@
       {% endfor %}
     </ul>
     </div> -->
-    <p>
     {% for obj in news %}
      <a href="#">{{obj.location}} <span class="badge">{{obj.loc}}</span></a>
-     <!-- <button type="button" class="btn btn-primary">{{obj.location}} <span class="badge">{{obj.loc}}</span></button> -->
+
+     <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal{{obj.location}}">{{obj.location}}</button>
+     <div class="modal fade" id="myModal{{obj.location}}" role="dialog">
+       <div class="modal-dialog">
+
+         <! Modal content-->
+         <!-- <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+             <h4 class="modal-title">Modal Header</h4>
+           </div>
+           <div class="modal-body">
+             <p>{{obj.location}}</p>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           </div>
+         </div>
+
+       </div>
+     </div> -->
       {% endfor %}
-    </p>
   </div>
 </div>
 </div><!-- row -->
+
+
+
 
 
 

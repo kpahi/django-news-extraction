@@ -41,7 +41,7 @@ def index(request):
             newheadings.append(i)
             newsindex.append(headings.index(i))
     # print("head",len(newheadings))
-    print(indexes)
+    # print(indexes)
     # newss = [v for i, v in enumerate(newss) if i not in indexes]
     getnews = [v for i, v in enumerate(newss) if i in newsindex]
     # print("news",len(newss))
@@ -109,7 +109,7 @@ def index(request):
     # print(len(headings))
     # print(len(newsStory))
     # This line is main
-    headingDetail = dict(zip(headings, newsStory))
+    headingDetail = dict(zip(newheadings, newsStory))
 
     return render_to_response('rssdb/index.html', {
         'detailnews': detailNews,

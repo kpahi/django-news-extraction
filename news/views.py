@@ -34,11 +34,11 @@ def objectlist(request):
                 vecdict[ke]= 1
             else:
                 vecdict[ke]+=1
-
+    del vecdict["null"]
     # context = News.objects.all()
     template_name = 'news/index.html'
 
-    return render_to_response(template_name, {'news': context,'vehicle':vecdict})
+    return render_to_response(template_name, {'news': context,'vehicle':vecdict,'allnews':content})
 
 def get_req(request):
     if request.method == 'POST':

@@ -39,7 +39,15 @@
                     <a href="/?page={{ page_obj.next_page_number }}">next</a>
                 {% endif %}
             </span>
-        </div>
+            </div>
+            <ul class="pagination">
+      <!-- {% for i in "xxx" %}
+            <a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+ <li class="active"><a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+
+</ul>
+{% endfor %} -->
+
 
 {% else %}
     <h3>RSS feeds</h3>
