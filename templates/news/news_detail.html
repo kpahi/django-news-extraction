@@ -82,7 +82,7 @@ $(document).ready(function(){
 
         console.log({{object.id}});
 
-        $('#summary').replaceWith("<div id='summary'><h2> Extracted items </h2> <p> Death: " + news.death +  "</p><p> Injury: " + news.injury +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day:  "+ news.day +"</p></div>");
+        $('#summary').replaceWith("<div id='summary'><h2> Extracted items </h2> <p> Death: " + news.death +  "</p><p> Death: " + news.death_no +  "</p><p> Injury: " + news.injury +"</p><p> Death: " + news.injury_no +  "</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day:  "+ news.day +"</p></div>");
 
   }
   present_summary();
@@ -93,11 +93,11 @@ $(document).ready(function(){
 </script>
 <script>
 function geocord(){
-            console.log(4);
+            // console.log(4);
           var geocoder =  new google.maps.Geocoder();
   geocoder.geocode( { 'address': '{{object.location}}'}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng());
+          // alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng());
           var uluru = {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
 
           var map = new google.maps.Map(document.getElementById('map'), {

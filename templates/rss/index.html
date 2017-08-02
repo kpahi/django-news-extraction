@@ -27,7 +27,7 @@
       {% endfor %}
       {# .... **Now the pagination section** .... #}
     {% if is_paginated %}
-        <div class="pagination">
+        <!-- <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
                     <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
@@ -39,8 +39,40 @@
                     <a href="/?page={{ page_obj.next_page_number }}">next</a>
                 {% endif %}
             </span>
-            </div>
-            <ul class="pagination">
+            </div> -->
+
+            <div class="center">
+              <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li><a href="/?page={{ page_obj.previous_page_number }}">«</a></li>
+
+                    <!-- <a href="/?page={{ page_obj.previous_page_number }}">previous</a> -->
+                {% endif %}
+              {% for page in page_obj.paginator.page_range %}
+              {% ifequal page page_obj.number %}
+              <!-- <li><a id="test2" class="active" href="/?page={{ page }}">{{page}}</a></li> -->
+            <li><a class="active" href="/?page={{ page }}">{{page}}</a></li>
+
+        <!-- Do something special for this page -->
+              {% else %}
+      <!-- <li><a href="/?page={{ page}}" id="test1">{{page}}</a></li> -->
+          <li><a href="/?page={{ page }}">{{page}}</a></li>
+
+        <!-- All the other pages -->
+                  {% endifequal %}
+
+
+    <!-- {{ page }} -->
+{% endfor %}
+{% if page_obj.has_next %}
+<li><a href="/?page={{ page_obj.next_page_number }}" onclick="test()">»</a></li>
+
+    <!-- <a href="/?page={{ page_obj.next_page_number }}">next</a> -->
+{% endif %}
+
+</ul>
+</div>
+
       <!-- {% for i in "xxx" %}
             <a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a>
  <li class="active"><a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
@@ -87,7 +119,32 @@
   border-radius: 15px;
   margin: 5px;
 }
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
 
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+div.center {text-align: center;}
 </style>
 
 <script>
@@ -97,6 +154,37 @@
 // }
 
 $(document).ready(function(){
+  $('ul.pagination').on('click', 'a', function() { // listen for click on pagination link
+    if($(this).hasClass('active')) return false;
+
+    var active_elm = $('ul.pagination a.active');
+
+    if(this.id == 'next'){
+      var _next = active_elm.parent().next().children('a');
+      if($(_next).attr('id') == 'next') {
+
+        // appending next button if reach end
+        var num = parseInt($('a.active').text())+1;
+        active_elm.removeClass('active');
+        $('<li><a class="active" href="#">'+num+'</a></li>').insertBefore($('#next').parent());
+        return;
+      }
+      _next.addClass('active');
+
+
+
+
+    }
+    else if(this.id == 'prev') {
+      var _prev = active_elm.parent().prev().children('a');
+      if($(_prev).attr('id') == 'prev') return false;
+      _prev.addClass('active');
+    } else {
+      $(this).addClass('active');
+    }
+    active_elm.removeClass('active');
+
+});
 console.log("hello");
   function present_summary(){
     var accidentNews ={};

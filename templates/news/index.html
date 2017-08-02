@@ -1,7 +1,5 @@
 
 {% extends "base.html" %}
-
-
 {% block title %} News Information Extraciton {% endblock title %}
 
 {% block nav_index%}
@@ -482,7 +480,6 @@ $(function() {
 });
 </script>
 
-<script>
 
 
 
@@ -491,124 +488,6 @@ $(function() {
 
 
 
-<script>
-//
-//
-//     function bikeAll(name) {
-//          var i =0;
-//          var arr = [];
-//          var arr_bike=[];
-//          var accidentNews={};
-//           {% for news in object_list %}
-//               accidentNews[{{news.id}}] = {
-//              location : "{{ news.location }}",
-//              death : "{{ news.death }}",
-//              injury:"{{ news.injury}}",
-//              vehicle_no:"{{ news.vehicle_no }}",
-//              date:"{{ news.date }}",
-//              url:"{{ news.get_absolute_url }}",
-//
-//            };
-//
-//
-//              {% for key,value in news.vehicle_no.items %}
-//
-//              {% if  key == "tipper"  %}
-//               if (name == 'tipper'){
-//                 arr.push(accidentNews[{{ news.id }}]);
-//               }
-//
-//
-//              {% endif %}
-//
-//              {% if key == "bike" %}
-//              if (name == 'bike'){
-//              arr.push(accidentNews[{{ news.id }}]);
-//            }
-//              {% endif %}
-//
-//              {% if  key == "bus"  %}
-//               if (name == 'bus'){
-//                 arr.push(accidentNews[{{ news.id }}]);
-//               }
-//
-//
-//              {% endif %}
-//
-//              {% if  key == "scooter"  %}
-//               if (name == 'scooter'){
-//                 arr.push(accidentNews[{{ news.id }}]);
-//               }
-//
-//
-//              {% endif %}
-//
-//              {% if  key == "four-wheeler" or key == "van" %}
-//               if (name == 'four-wheeler'){
-//                 arr.push(accidentNews[{{ news.id }}]);
-//               }
-//
-//
-//              {% endif %}
-//
-//              {% endfor %}
-//
-//
-//           {% endfor %}
-//
-//
-//         var i;
-//
-//
-//         document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
-//
-//         for (i=0; i<arr.length;i++){
-//
-//           var s= arr[i].url;
-//           var mycode1 = "<li class='listed' style='list-style:none;'> <h4> <a style='color:black;' href='" + s + "' > ";
-//           var mycode2 = "</a></h4> </li>";
-//
-//
-//           var j =(arr[i].vehicle_no);
-//
-//           var decJ= $('<textarea/>').html(j).text();
-//           // console.log(decJ);
-//           // var x = JSON.parse(JSON.stringify(decJ));
-//           // console.log(x);
-//
-//           var v = decJ.replace(/\'/g, '"');
-//           // alert(v);
-//           // alert(JSON.stringify(v));
-//           var jsonObject = JSON.parse((v));
-//           // alert(jsonObject);
-//           // alert(decVehicle);
-//
-//           for (var key in jsonObject){
-//             // alert(key +"->"+jsonObject[key]);
-//             var n = jsonObject[name];
-//
-//           }
-//
-//           //console.log(decJ);
-//           // console.log(name);
-//           // console.log(i);
-//           // var key = "'bus'";
-//           // console.log(decJ.key);
-//           // var keys=[];
-//
-//
-//          document.getElementById("demo").innerHTML += mycode1 +name +" : "+ n + " @ "+ arr[i].location+ mycode2 ;
-//
-//        }
-//        document.getElementById("demo").innerHTML += "</ul>";
-//
-//   }
-//
-//
-//
-//
-//
-// </script>
 
 
 {% endblock javascript %}
