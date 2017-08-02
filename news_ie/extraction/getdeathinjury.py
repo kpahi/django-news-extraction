@@ -34,10 +34,10 @@ def death_no(sentlist):
             for dic in srlList:
                 for text in dic:
                     if dic[text] in deathverb:
-                        if "A1" in dic:
-                            death = dic["A1"]
+                        if "A0" in dic:
+                            death = dic["A0"]
                         else:
-                            death = dic['A0']
+                            death = dic['A1']
 
         else:
             break
