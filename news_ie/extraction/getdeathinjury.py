@@ -34,10 +34,10 @@ def death_no(sentlist):
             for dic in srlList:
                 for text in dic:
                     if dic[text] in deathverb:
-                        if "A1" in dic:
-                            death = dic["A1"]
+                        if "A0" in dic:
+                            death = dic["A0"]
                         else:
-                            death = dic['A0']
+                            death = dic['A1']
 
         else:
             break
@@ -64,8 +64,11 @@ def injury_no(sentlist):
                                     if "A0" in dic:
                                         injury = dic["A0"]
                                         # This indentation was backward
-                                    else:
+                                    elif "A1" in dic:
                                         injury = dic["A1"]
+                                    else:
+                                        injury ="None"
+
         else:
             break
     return injury

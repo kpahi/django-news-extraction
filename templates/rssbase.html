@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
-    <!-- <meta http-equiv="refresh" content="5; URL=http://127.0.0.1:8000/rssdb/" > -->
 
+    <meta http-equiv="refresh" content="5; URL=http://127.0.0.1:8000/" >
 
       <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {% block title %} NIEV {% endblock title %} </title>
@@ -37,7 +37,7 @@
       background: url({% static "img/road.jpe" %} );
       background-size:100%;
       /*background-position: center;*/
-      height:100px;
+      height:350px;
       width:100%;
       margin: 0.1px;
 
@@ -49,7 +49,7 @@
     }
 
     .navbar-nav li{
-      /*color: #fff;*/
+      color: #fff;
       display: inline;
       font-family: sans-serif;
       font-weight: 600;
@@ -72,17 +72,17 @@
       </div>
 
 
-      <nav class="navbar navbar-toggleable-md ">
-        <!-- <nav class="navbar navbar-default"> -->
 
+
+      <nav class="navbar navbar-toggleable-md ">
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a {% block nav_index_r %} {% endblock nav_index_r %} style="color:white;" href="/" >Home</a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a {% block nav_index_rs %} {% endblock nav_index_rs %} style="color:white;" href="/rssdb" >Rssdb</a>
-            </li> -->
+            </li>
             <li class="nav-item">
               <a {% block nav_index %} {% endblock nav_index %} style="color:white;" href="/news/" >Database</a>
             </li>

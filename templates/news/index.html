@@ -1,7 +1,5 @@
 
 {% extends "base.html" %}
-
-
 {% block title %} News Information Extraciton {% endblock title %}
 
 {% block nav_index%}
@@ -16,34 +14,6 @@
   <br>
   <div class="row">
   <div class="col-md-6">
-    <div class="panel-default">
-    <div class="panel-heading" style="color:#fff;">
-      <h4> Accident by Vehicles </h4>
-    </div>
-    <div class="panel-body">
-      <ul class="nav nav-tabs" id="tabs">
-        <li><a href="#bike-accident" onclick="bikeAll('bike')"> Bike </a> </li>
-        <li><a href="#scooter-accident" onclick="bikeAll('scooter')"> Scooter </a> </li>
-        <li><a href="#four-whieeler-accident" onclick="bikeAll('four-wheeler')"> Four Wheeler </a> </li>
-        <li><a href="#bus-accident" onclick="bikeAll('bus')"> Bus </a> </li>
-        <li><a href="#tipper-accident" onclick="bikeAll('tipper')"> Tipper </a></li>
-      </ul>
-      <div class="tab-content">
-        <h3 id="demo" > Select the Accident vehicle you want to list.<br> </h3>
-
-
-      </div>
-
-
-    </div>
-
-  </div>
-  <!--
-  <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-      <span></span> <b class="caret"></b>
-  </div>
--->
 
 <!-- For Date -->
 <div class="panel-default">
@@ -71,35 +41,85 @@
 </div>
 
 
-
-
+<!-- For location -->
 
 <div class="col-md-6">
   <div class="panel-default">
   <div class="panel-heading" style="color:#fff;">
     <div class="nav-item"><h4> Accident Sorted by location </h4>
-    <h2> {{ name }} </h2>
-  </div>
+      </div>
 </div>
   <div class="panel-body">
   </div>
-    <div class="pre-scrollable">
-      <ul>
-      {% for n in object_list %}
-      <li class='listed' style='list-style:none;' >
-        <h4>
-      <a id="p1" data-html="true" data-toggle="popover" data-placement="top" title="Death: {{ n.death }} <br> Injury: {{ n.injury}}" data-content="<div><b>Example popover</b> - content</div>" href = " {{ n.get_absolute_url }} " > {{ n.location }}</a>
-    </h4>
+    {% for obj in news %}
+    {% if  obj.location != "" %}
+     <button type="button" id="{{obj.location}}" onclick= "locationclick(this.id)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">{{obj.location}}<span class="badge">{{obj.loc}}</span></button>
+     {% endif %}
+    {% endfor %}
+    <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-    </li>
-      {% endfor %}
-    </ul>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="locid" class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <div >
+          <h4 id="demo" > Please Pick Up Date<br> </h4>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
+
   </div>
 </div>
-</div><!-- row -->
+  </div>
+</div>
+</div>
 
 
+
+
+
+<!-- For Vehicle -->
+<div class="col-md-6">
+  <div class="panel-default">
+  <div class="panel-heading" style="color:#fff;">
+    <div class="nav-item"><h4> Accident Sorted by Vehicles</h4>
+  </div>
+</div>
+{% for obj,item in vehicle.items %}
+  <button type="button" id="{{obj}}" onclick= "vehicleclick(this.id)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalv">{{obj}}<span class="badge">{{item}}</span></button>
+{% endfor %}
+<div id="myModalv" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="vecid" class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <div >
+          <h4 id="demovec" ><br> </h4>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
 
 
 {% endblock content %}
@@ -137,197 +157,213 @@
 
 </style>
 
-<script type="text/javascript">
-$(function() {
-
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    }, cb);
-
-    cb(start, end);
-
-    // var range=$("#reportrange").daterangepicker("getRange");
-    // $("#range_start").val(range['start']);
-    // $("#range_end").val(range['end']);
-
-
-});
-</script>
-
-
 <script>
+function vehicleclick(element){
+    var i =0;
+      var arr = [];
+      var arr_bike=[];
+      var accidentNews={};
+       {% for news in allnews %}
+           accidentNews[{{news.id}}] = {
+          location : "{{ news.location }}",
+          death : "{{ news.death }}",
+          injury:"{{ news.injury}}",
+          vehicle_no:"{{ news.vehicle_no }}",
+          date:"{{ news.date }}",
+          url:"{{ news.get_absolute_url }}",
 
-$(document).ready(function() {
-  // $("#tabs").click(function {
-  //   $(this).tab('show');
-  // });
+        };
+              {% for key,value in news.vehicle_no.items %}
+              {% if  key == "tipper"  %}
+                        if (element == 'tipper'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
 
 
-  // $("#p1").mouseenter(function () {
-  //   alert("Direct call");
-  // });
+                          {% endif %}
 
-  $("[id='p1']").on('mouseenter',sel);
-  $("[id='p1']").on('mouseleave',dsel);
+                          {% if key == "bike" %}
+                          if (element == 'bike'){
+                          arr.push(accidentNews[{{ news.id }}]);
+                        }
+                          {% endif %}
 
-  // $('[data-toggle="popover"]').popover({
-  //   title: 'just to make it works',
-  // });
+                          {% if  key == "bus"  %}
+                           if (element== 'bus'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
 
-  function sel(){
 
-      $(this).animate({"padding-left": "50px"}, "normal");
+                          {% endif %}
 
-      $('[data-toggle="popover"]').popover({
-        title: 'just to make it works',
-      });
+                          {% if  key == "scooter"  %}
+                           if (element == 'scooter'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
 
+
+                          {% endif %}
+
+                          {% if  key == "four-wheeler" %}
+                           if (element == 'four-wheeler'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "taxi" %}
+                           if (element == 'taxi'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "tractor" %}
+                           if (element == 'tractor'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "two-wheeler" %}
+                           if (element == 'two-wheeler'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "van" %}
+                           if (element == 'van'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "truck" %}
+                           if (element == 'truck'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "vehicle" %}
+                           if (element == 'vehicle'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "jeep" %}
+                           if (element == 'jeep'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "tanker" %}
+                           if (element == 'tanker'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "motorcycle" %}
+                           if (element == 'motorcycle'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "motorbike" %}
+                           if (element == 'motorbike'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+                          {% if  key == "Yatayat" %}
+                           if (element == 'Yatayat'){
+                             arr.push(accidentNews[{{ news.id }}]);
+                           }
+
+
+                          {% endif %}
+              {% endfor %}
+        {% endfor %}
+        element=element.toUpperCase();
+        document.getElementById("vecid").innerHTML="<p>"+element+"</p><span class='badge'>"+arr.length+"</span>";
+
+        document.getElementById("demovec").innerHTML="";
+      for(i =0;i<arr.length;i++)
+      {
+        var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + arr[i].url + "' > ";
+        var mycode2 = "</a> </li>";
+        var j = arr[i].date;
+        var l = arr[i].location;
+        document.getElementById("demovec").innerHTML += mycode1 + j +" @ "+ l + mycode2 ;
+        console.log(arr[i].url);
+
+      }
+console.log(element);
+}
+
+
+
+function locationclick(element){
+  // check = element.tostring();
+  elementstrin = element.split(" ");
+  joinelement= elementstrin.join("");
+  // console.log(join);
+  var accidentNews ={};
+  var arr = [];
+  var count = 0;
+
+
+  {% for news in allnews %}
+
+  {% if news.id is not None %}
+  // console.log({{news.id}});
+  count +=1;
+
+  accidentNews[{{news.id}}] = {
+  location : "{{ news.location }}",
+  death : "{{ news.death }}",
+  death_no : "{{ news.death_no }}",
+  injury:"{{ news.injury}}",
+  injury_no:"{{ news.injury_no}}",
+  vehicle_no:"{{ news.vehicle_no }}",
+  date:"{{ news.date }}",
+  url:"{{ news.get_absolute_url }}",
+  day:"{{ news.day }}",
   };
-  function dsel() {
 
-    $(this).stop(true).animate({"padding-left": "0px"}, "slow");
+  {% else %}
 
+  accidentNews[0] = {};
 
+  {% endif %}
+strinnews =accidentNews[{{news.id}}].location.split(" ");
+joinnews = strinnews.join("");
+if(joinelement == joinnews){
+  arr.push(accidentNews[{{news.id}}]);
+}
+  {% endfor %}
+  document.getElementById("demo").innerHTML ="" ;
+  element=element.toUpperCase();
+  document.getElementById("locid").innerHTML="<p>"+element+"</p><span class='badge'>"+arr.length+"</span>";
+  for(i=0;i<arr.length;i++)
+  {
+    var mycode1 = "<li class='listed' style='list-style:none;'> <a style='color:black;' href='" + arr[i].url + "' > ";
+    var mycode2 = "</a> </li>";
+    var j = arr[i].date;
+    var l = arr[i].location;
+    document.getElementById("demo").innerHTML += mycode1 + j +" @ "+ l + mycode2 ;
+
+    console.log(arr[i].url);
   }
-});
+}
 </script>
 
-
-
-
-<script>
-
-    function bikeAll(name) {
-         var i =0;
-         var arr = [];
-         var arr_bike=[];
-         var accidentNews={};
-          {% for news in object_list %}
-              accidentNews[{{news.id}}] = {
-             location : "{{ news.location }}",
-             death : "{{ news.death }}",
-             injury:"{{ news.injury}}",
-             vehicle_no:"{{ news.vehicle_no }}",
-             date:"{{ news.date }}",
-             url:"{{ news.get_absolute_url }}",
-
-           };
-
-
-             {% for key,value in news.vehicle_no.items %}
-
-             {% if  key == "tipper"  %}
-              if (name == 'tipper'){
-                arr.push(accidentNews[{{ news.id }}]);
-              }
-
-
-             {% endif %}
-
-             {% if key == "bike" %}
-             if (name == 'bike'){
-             arr.push(accidentNews[{{ news.id }}]);
-           }
-             {% endif %}
-
-             {% if  key == "bus"  %}
-              if (name == 'bus'){
-                arr.push(accidentNews[{{ news.id }}]);
-              }
-
-
-             {% endif %}
-
-             {% if  key == "scooter"  %}
-              if (name == 'scooter'){
-                arr.push(accidentNews[{{ news.id }}]);
-              }
-
-
-             {% endif %}
-
-             {% if  key == "four-wheeler" or key == "van" %}
-              if (name == 'four-wheeler'){
-                arr.push(accidentNews[{{ news.id }}]);
-              }
-
-
-             {% endif %}
-
-             {% endfor %}
-
-
-          {% endfor %}
-
-
-        var i;
-
-
-        document.getElementById("demo").innerHTML = "<ul style='list-style:none;'>";
-
-        for (i=0; i<arr.length;i++){
-
-          var s= arr[i].url;
-          var mycode1 = "<li class='listed' style='list-style:none;'> <h4> <a style='color:black;' href='" + s + "' > ";
-          var mycode2 = "</a></h4> </li>";
-
-
-          var j =(arr[i].vehicle_no);
-
-          var decJ= $('<textarea/>').html(j).text();
-          // console.log(decJ);
-          // var x = JSON.parse(JSON.stringify(decJ));
-          // console.log(x);
-
-          var v = decJ.replace(/\'/g, '"');
-          // alert(v);
-          // alert(JSON.stringify(v));
-          var jsonObject = JSON.parse((v));
-          // alert(jsonObject);
-          // alert(decVehicle);
-
-          for (var key in jsonObject){
-            // alert(key +"->"+jsonObject[key]);
-            var n = jsonObject[name];
-
-          }
-
-          //console.log(decJ);
-          // console.log(name);
-          // console.log(i);
-          // var key = "'bus'";
-          // console.log(decJ.key);
-          // var keys=[];
-
-
-         document.getElementById("demo").innerHTML += mycode1 +name +" : "+ n + " @ "+ arr[i].location+ mycode2 ;
-
-       }
-       document.getElementById("demo").innerHTML += "</ul>";
-
-  }
-
-
-
-
-
-</script>
 
 <script>
 $("#datebtn").click(function () {
@@ -343,7 +379,7 @@ $("#datebtn").click(function () {
   // alert("StartDate: "+ startdate + "EndDate: "+ enddate);
   var accidentNews={};
 
-   {% for news in object_list %}
+   {% for news in news %}
        accidentNews[{{news.id}}] = {
       location : "{{ news.location }}",
       death : "{{ news.death }}",
@@ -363,7 +399,7 @@ $("#datebtn").click(function () {
 
     {% endfor %}
 
-    // console.log(news_id);
+    console.log(news_id);
     for (var j = 0; j<news_id.length; j++){
       var id = news_id[j]
       var news = accidentNews[id];
@@ -410,4 +446,48 @@ $("#datebtn").click(function () {
 });
 
 </script>
+
+<script type="text/javascript">
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+    // var range=$("#reportrange").daterangepicker("getRange");
+    // $("#range_start").val(range['start']);
+    // $("#range_end").val(range['end']);
+
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock javascript %}

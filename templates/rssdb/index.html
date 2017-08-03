@@ -1,0 +1,157 @@
+
+{% extends "rssbase.html" %}
+
+
+{% block title %} News Information Extraciton {% endblock title %}
+
+{% block nav_index_rs %}
+    class=" nav-link active"
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row"><!--row-->
+    <div class="col-md-6">
+      <h2> RSS News </h2>
+      <div class="pre-scrollable">
+
+
+      {% for heading,story in headingdetail.items %}
+      <ul>
+        <li class='listed' style='list-style:none;'>
+
+          {% if story.id is not None %}
+
+
+          <p id={{ story.id }} class="head">   <a href="#">{{ heading }}:</a> </p>
+          <p><small> {{ story.location }} <br> {{ story.slug }}</small> </p>
+        </li>
+
+          {% else %}
+
+          <li  class='listed' style='list-style:none;'>
+          <p id='no' > <a href="#"> {{ heading }}</a> </p>
+
+          {% endif %}
+
+
+        </li>
+      </ul>
+      {% endfor %}
+    </div>
+
+
+    </div>
+
+    <div class="col-md-6">
+      <h2> Extracted items </h2>
+      <p id='summary'> Click on one of the news </p>
+
+
+
+
+    </div>
+  </div><!--row-->
+
+
+
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+<style>
+
+.listed{
+
+  background-color: rgb(169, 210, 237);
+  color:#000;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+</style>
+
+<script>
+$(document).ready(function(){
+
+  function present_summary(){
+    var accidentNews ={};
+
+    {% for news in newsstory %}
+
+    {% if news.id is not None %}
+
+
+    accidentNews[{{news.id}}] = {
+    location : "{{ news.location }}",
+    death : "{{ news.death }}",
+    death_no : "{{ news.death_no }}",
+    injury:"{{ news.injury}}",
+    injury_no:"{{ news.injury_no}}",
+    vehicle_no:"{{ news.vehicle_no }}",
+    date:"{{ news.date }}",
+    url:"{{ news.get_absolute_url }}",
+    day:"{{ news.day }}",
+
+    };
+
+    {% else %}
+
+    accidentNews[0] = {};
+
+    {% endif %}
+
+    {% endfor %}
+
+
+
+    $('.head').each(function(){
+      $(this).click(function(){
+
+        var news = accidentNews[this.id];
+        var vehicle = news.vehicle_no;
+        var decVehicle= $('<textarea/>').html(vehicle).text();
+
+        var v = decVehicle.replace(/\'/g, '"');
+        // alert(v);
+        // alert(JSON.stringify(v));
+        var jsonObject = JSON.parse((v));
+        // alert(jsonObject);
+        // alert(decVehicle);
+        // for (var key in jsonObject){
+        //   // alert(jsonObject['tipper']);
+        // }
+
+        // alert("Hello each " + news.location );
+        //$('#summary').replaceWith("<h2 id='summary'>  " +  news.death , news.location  + "</h2>");
+        $('#summary').replaceWith("<div id='summary'> <p> Death: " + news.death +  "</p><p> Death Number: " + news.death_no +  "</p><p> Injury: " + news.injury +"</p><p> Injury Number: " + news.injury_no +"</p><p> Vehicle Involved: " + news.vehicle_no +"</p><p>Location: " + news.location +"</p><p> Date: "+ news.date +"</p><p> Day: "+ news.day +"</p></div>");
+
+    //
+    // function summary_info() {
+    //
+    //   return ( "<p>The Location is: " + news.location +"</p>" );
+    // }
+
+  });
+
+  $('#no').click(function () {
+    $('#summary').replaceWith("<h2 id='summary'> No Summary Information</h2>");
+
+
+  })
+
+    });
+
+  }
+  present_summary();
+
+});
+
+</script>
+
+{% endblock javascript %}

@@ -208,12 +208,12 @@ def extract_items(n):
     # Get location from 1st sentences list
     # from the classifier
     location = geotraverseTree(splited_sen[0])
-    print(location)
+    # print(location)
     story.location = location
 
     # Get day from the total sentence list
     day = get_day(sentlist)
-    print(day)
+    # print(day)
     story.day = day
 
     # from standford, dont forget to use ' '.join(location)

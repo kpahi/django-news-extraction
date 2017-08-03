@@ -1,0 +1,8 @@
+<h1>RSS</h1>
+<ul>
+{% for article in object_list %}
+    <li>{{ article.story }} - {{ article.header }}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>

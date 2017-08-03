@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'', include('rss.urls')),
     url(r'^news_ie/', include('news_ie.urls')),
     url(r'^news/', include('news.urls')),
+    url(r'^rssdb/', include('rssdb.urls')),
+
+
 
 
     #url(r'^', include('world.urls')),

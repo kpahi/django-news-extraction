@@ -44,11 +44,11 @@ input[type=text]:focus {
 table td{
   font-weight: bold;
 }
-.nav > li > a {
+/*.nav > li > a {
     position: relative;
     display: block;
     padding: 1px 1px;
-}
+}*/
 
 
 body {font-family: sans-serif}

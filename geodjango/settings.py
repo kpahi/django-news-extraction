@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'world',
     'news_ie',
+    'rssdb.apps.RssdbConfig',
 
 ]
 
