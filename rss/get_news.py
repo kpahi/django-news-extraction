@@ -5,7 +5,7 @@ from nltk.stem import WordNetLemmatizer
 import re
 
 
-url_link = "http://fetchrss.com/rss/59549c628a93f872018b4567873910360.xml"
+url_link = "http://fetchrss.com/rss/59549c628a93f872018b4567709026440.xml"
 
 # get all the links of news title
 links = []
@@ -32,6 +32,39 @@ def get_data_from_rss():
         data.append(news)
         # print(data)
     return data
+
+#get news from republica
+def get_rss_republica():
+    url_link = "http://fetchrss.com/rss/59549c628a93f872018b4567677181163.xml"
+    # get all the links of news title
+    links = []
+    news=[]
+    rss = feedparser.parse(url_link)
+    for post in rss.entries:
+        links.append(post.link)
+    for link in links:
+        page = requests.get(link)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        # news = [pt.get_text() for pt in soup.select(".content-wrapper")]
+        divTag = soup.find_all("div",{"class":"box recent-news-categories-details"})
+
+        for tag in divTag:
+            alltags = tag.find_all('p')
+
+        del alltags[:3]
+
+
+        #print(l[0])
+        for tag in alltags:
+            each = str(tag)
+            news.append(each.replace('<p>','').replace('</p>',''))
+        data.append(news)
+        print(data)
+    return data
+
+
+# get_rss_republica()
+
 #test news is traffic accident related or not
 def testaccidentnews(headline):
     ans = False

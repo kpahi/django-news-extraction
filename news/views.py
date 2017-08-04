@@ -22,7 +22,7 @@ from .forms import NewsFilterForm
 def objectlist(request):
     model = News
     context= News.objects.raw('SELECT COUNT(location) as loc,SUM(id) as id FROM news_ie_news GROUP BY location ORDER BY location ASC')
-    # context = News.objects.all()
+    # context = News.objects.all()s
     content = News.objects.all()
     vecdict={}
     testlist =  []

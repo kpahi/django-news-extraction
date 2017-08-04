@@ -22,41 +22,42 @@ def index(request):
     for news in news_list:
         # print(news)
         newss.append(str(news))
-    # newss = [str(news[0]) for news in news_list]
+    newss = [str(news[0]) for news in news_list]
     print("lenght of news:")
     print(len(newss))
     # headings
     headings = [post.title for post in rss.entries]
-    indexes = []
-    newheadings=[]
-    newsindex = []
-    # print(len(headings))
-    for i in headings:
-        test = testaccidentnews(i)
-        # print(i,test)
-        if test == False:
-            indexes.append(headings.index(i))
-            # del headings[headings.index(i)]
-        else:
-            newheadings.append(i)
-            newsindex.append(headings.index(i))
+    # indexes = []
+    # newheadings=[]
+    # newsindex = []
+    # # print(len(headings))
+    # #test accident news
+    # for i in headings:
+    #     test = testaccidentnews(i)
+    #     # print(i,test)
+    #     if test == False:
+    #         indexes.append(headings.index(i))
+    #         # del headings[headings.index(i)]
+    #     else:
+    #         newheadings.append(i)
+    #         newsindex.append(headings.index(i))
     # print("head",len(newheadings))
     # print(indexes)
     # newss = [v for i, v in enumerate(newss) if i not in indexes]
-    getnews = [v for i, v in enumerate(newss) if i in newsindex]
+    # getnews = [v for i, v in enumerate(newss) if i in newsindex]
     # print("news",len(newss))
     # print(newss)
         # links
     links = [post.link for post in rss.entries]
-    linkss = [v for i, v in enumerate(links) if i in newsindex]
-    print(linkss)
+    # linkss = [v for i, v in enumerate(links) if i in newsindex]
+    # print(linkss)
 
 
     # combine the news headings and news body
-    detailNews = dict(zip(newheadings, getnews))
-    dictnews = dict(zip(getnews,newheadings))
+    detailNews = dict(zip(headings, newss))
+    dictnews = dict(zip(newss,headings))
     # combine headings and links
-    newsLinks = dict(zip(newheadings, linkss))
+    newsLinks = dict(zip(headings, links))
 
     # all news form db
     allNews = News.objects.all()
@@ -64,7 +65,7 @@ def index(request):
     allIndex = []
     newsStory = []
 
-    for i, n in enumerate(getnews):
+    for i, n in enumerate(newss):
         similarCoeff = []
 
         for dbNews in allNews:
@@ -109,7 +110,7 @@ def index(request):
     # print(len(headings))
     # print(len(newsStory))
     # This line is main
-    headingDetail = dict(zip(newheadings, newsStory))
+    headingDetail = dict(zip(headings, newsStory))
 
     return render_to_response('rssdb/index.html', {
         'detailnews': detailNews,
