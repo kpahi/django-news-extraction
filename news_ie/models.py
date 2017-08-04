@@ -29,6 +29,7 @@ class News(models.Model):
     class Meta:
         verbose_name = 'News'
         verbose_name_plural = 'Newss'
+        ordering = ('date','location' )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.date) + "-" + (self.location))
