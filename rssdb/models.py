@@ -21,10 +21,13 @@ class rssdata(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ('-date','location' )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.date) + "-" + (self.location))
         super(rssdata, self).save(*args, **kwargs)
+
 
     # def get_absolute_url(self):
     #     return reverse('news-detail', kwargs={'slug': self.slug})

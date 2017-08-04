@@ -106,6 +106,6 @@ class RssListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(RssListView, self).get_context_data(**kwargs)
-        context['rssdb'] = rssdata.objects.all()
+        context['rssdb'] = rssdata.objects.all().order_by('date')
 
         return context
