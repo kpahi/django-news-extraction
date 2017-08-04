@@ -1,11 +1,13 @@
-from django.db import models
 from datetime import date
 
 from django.contrib.postgres.fields import JSONField
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.template.defaultfilters import slugify
+
+
 class rssdata(models.Model):
-    header =models.CharField(blank=True, max_length=100)
+    header = models.CharField(blank=True, max_length=100)
     body = models.TextField(blank=False, null=False)
     death = models.CharField(blank=True, max_length=100)
     death_no = models.IntegerField(blank=True, null=True)
@@ -21,13 +23,16 @@ class rssdata(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
-        ordering = ('-date','location' )
+        ordering = ('-date', 'location')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.date) + "-" + (self.location))
         super(rssdata, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.header
 
     # def get_absolute_url(self):
     #     return reverse('news-detail', kwargs={'slug': self.slug})

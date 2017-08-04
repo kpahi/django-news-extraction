@@ -29,7 +29,7 @@ class News(models.Model):
     class Meta:
         verbose_name = 'News'
         verbose_name_plural = 'Newss'
-        ordering = ('-date','location' )
+        ordering = ('-date', 'location')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.date) + "-" + (self.location))
@@ -39,4 +39,4 @@ class News(models.Model):
         return reverse('news-detail', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return self.location
+        return self.slug

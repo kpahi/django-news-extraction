@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'world',
     'news_ie',
     'rssdb.apps.RssdbConfig',
+    'rss',
+
 
 ]
 

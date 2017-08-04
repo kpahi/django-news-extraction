@@ -12,7 +12,7 @@ from .extraction.getdate import extract_date
 from .extraction.getday import get_day
 from .extraction.getdeathinjury import *
 from .extraction.getnewlocation import geotraverseTree
-from .extraction.ner import getlocation
+# from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
 from .forms import NameForm
 from .geocoder import *
@@ -59,7 +59,8 @@ def get_news(request):
                 splited_sen.append(sent)
             #     # print(sent + "\n")
             #
-            sentences_dic = dict((i, splited_sen[i]) for i in range(0, len(splited_sen)))
+            sentences_dic = dict((i, splited_sen[i])
+                                 for i in range(0, len(splited_sen)))
             # # print(sentences_dic)
             #
             # # Get the vehicle no. Here number_plate is the dictionary
@@ -136,7 +137,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location,'lat':lat,'lng':lng, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location, 'lat': lat, 'lng': lng, 'coordintae': location_coordinates})
     else:
         form = NameForm()
 
@@ -165,7 +166,8 @@ def extract_items(n):
         splited_sen.append(sent)
         # print(sent + "\n")
 
-    sentences_dic = dict((i, splited_sen[i]) for i in range(0, len(splited_sen)))
+    sentences_dic = dict((i, splited_sen[i])
+                         for i in range(0, len(splited_sen)))
     # print(sentences_dic)
 
     # Get the vehicle no. Here number_plate is the dictionary
@@ -208,12 +210,12 @@ def extract_items(n):
     # Get location from 1st sentences list
     # from the classifier
     location = geotraverseTree(splited_sen[0])
-    # print(location)
+    print(location)
     story.location = location
 
     # Get day from the total sentence list
     day = get_day(sentlist)
-    # print(day)
+    print(day)
     story.day = day
 
     # from standford, dont forget to use ' '.join(location)
