@@ -19,7 +19,7 @@ from .geocoder import *
 from .models import News
 from .sentoken import sentences
 from .up import rep
-
+from .extraction.parse import parseday, parselocation
 # Create your views here.
 
 
@@ -99,12 +99,14 @@ def get_news(request):
 
             # Get location from 1st sentences list
             # from the classifier
-            location = geotraverseTree(splited_sen[0])
+            # location = geotraverseTree(splited_sen[0])
+            location = parselocation(splited_sen[0])
             print(location)
             story.location = location
 
             # Get day from the total sentence list
-            day = get_day(sentlist)
+            # day = get_day(sentlist)
+            day = parseday(sentlist)
             print(day)
             story.day = day
 
@@ -201,7 +203,12 @@ def extract_items(n):
 
     extdate = extract_date(splited_sen)
     print("Date:", extdate)
-    s = extdate[0]
+    try:
+        s = extdate[0]
+    except:
+        s = "2017-08-09"
+
+
 
     story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
 

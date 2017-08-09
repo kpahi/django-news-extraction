@@ -26,7 +26,7 @@ class WorldBorder(models.Model):
 
 
 class WayPoint(models.Model):
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=100)
     geometry = models.PointField(srid=4326)
     objects = models.GeoManager()
 

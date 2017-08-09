@@ -39,6 +39,7 @@ def get_rss_republica():
     # get all the links of news title
     links = []
     news=[]
+    data=[]
     rss = feedparser.parse(url_link)
     for post in rss.entries:
         links.append(post.link)
@@ -57,9 +58,9 @@ def get_rss_republica():
         #print(l[0])
         for tag in alltags:
             each = str(tag)
+            # print(each.replace('<p>','').replace('</p>',''))
             news.append(each.replace('<p>','').replace('</p>',''))
         data.append(news)
-        print(data)
     return data
 
 

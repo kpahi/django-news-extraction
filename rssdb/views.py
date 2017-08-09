@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response
 from news_ie.extraction.vehicle_no import vehicle_no
 from news_ie.models import News
 from news_ie.views import extract_items, similar_story
-from rss.get_news import get_data_from_rss, rss, testaccidentnews
+from rss.get_news import get_data_from_rss, rss, testaccidentnews, get_rss_republica
 from rssdb.models import rssdata
 from django.views.generic.list import ListView
 from django.shortcuts import render
@@ -14,7 +14,10 @@ def index(request):
 
     # from RSS feed get news list
     news_list = get_data_from_rss()
+    republic_list = get_rss_republica()
+    # print(republic_list)
     newss = []
+    repnews=[]
     getnews=[]
 
     getdata = rssdata()
@@ -22,11 +25,16 @@ def index(request):
     for news in news_list:
         # print(news)
         newss.append(str(news))
+    for news in republic_list:
+        repnews.append(str(news))
+    print(len(repnews))
     newss = [str(news[0]) for news in news_list]
+    newss +=repnews
     print("lenght of news:")
     print(len(newss))
     # headings
     headings = [post.title for post in rss.entries]
+    print("heading no",len(headings))
     # indexes = []
     # newheadings=[]
     # newsindex = []
