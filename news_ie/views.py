@@ -1,6 +1,7 @@
 import datetime
 import string
 import sys
+import rssdb
 
 # from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.http import HttpResponse
@@ -16,6 +17,8 @@ from .extraction.vehicle_no import vehicle_no
 from .forms import NameForm
 # from .geocoder import *
 from .models import News
+# from rssdb.models import rssdata
+
 from .sentoken import sentences
 from .up import rep
 from .extraction.parse import parseday, parselocation
@@ -143,6 +146,31 @@ def get_news(request):
 
     return render(request, 'news_ie/index.html', {'form': form})
 
+#Save story from the data for extraction function
+def save_storye(story, data):
+    sim = []
+    # get all the saved story
+    savedStory = News.objects.all()
+    for s in savedStory:
+        doc2 = set(s.body.split())
+        coefficient = similar_story(data, s.body)
+        sim.append(coefficient)
+
+    # print(sim)
+    jacc_max = max(sim)
+    # print(jacc_max)
+
+    # set the threshold value to identify Duplicate
+
+    thresHold = .90
+
+    if jacc_max < thresHold:
+
+        s = story.save()
+
+        print("Save Successful:")
+    else:
+        print("Duplicate News Exists:")
 
 def extract_items(n):
     # print(n)
@@ -213,14 +241,15 @@ def extract_items(n):
 
     # Get location from 1st sentences list
     # from the classifier
-    location = geotraverseTree(splited_sen[0])
+    location = parselocation(splited_sen[0])
     # print(location)
     story.location = location
 
     # Get day from the total sentence list
-    day = get_day(sentlist)
+    day = parseday(sentlist)
     # print(day)
     story.day = day
+
 
     # from standford, dont forget to use ' '.join(location)
     # location = getlocation(splited_sen[0])
@@ -229,13 +258,6 @@ def extract_items(n):
 
     # location_coordinates = find_lat_lng(location)
 
-    try:
-        location_coordinates = find_lat_lng(location)
-    except Exception:
-        location_coordinates = [0.0, 0.0]
-
-    print(location_coordinates[0])
-    print(location_coordinates[1])
 
     # Save the Coordinate of the location to Database as WayPoint
     # lat = str(location_coordinates[0])
@@ -247,8 +269,8 @@ def extract_items(n):
     # WayPoint(name=' '.join(location), geometry=gem).save()
     #
     # # Now save the story
-    story.save()
-    # save_story(story, data)
+    # story.save()
+    save_storye(story, n)
     #
     return story
 

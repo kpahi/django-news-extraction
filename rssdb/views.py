@@ -14,7 +14,7 @@ def index(request):
 
     # from RSS feed get news list
     news_list = get_data_from_rss()
-    republic_list = get_rss_republica()
+    # republic_list = get_rss_republica()
     # print(republic_list)
     newss = []
     repnews=[]
@@ -25,11 +25,11 @@ def index(request):
     for news in news_list:
         # print(news)
         newss.append(str(news))
-    for news in republic_list:
-        repnews.append(str(news))
-    print(len(repnews))
+    # for news in republic_list:
+    #     repnews.append(str(news))
+    # print(len(repnews))
     newss = [str(news[0]) for news in news_list]
-    newss +=repnews
+    # newss +=repnews
     print("lenght of news:")
     print(len(newss))
     # headings
@@ -104,11 +104,12 @@ def index(request):
             getdata.death = story.death
             getdata.location = story.location
             # getdata.header = dictnews[n]
-            getdata.header = headings[n]
+            getdata.header = headings[i]
             getdata.slug= story.slug
 
             newsStory.append(story)
             print("Extracting complete:")
+            # save_storye(getdata,n)
             getdata.save()
 
             # story = News.objects.none()
@@ -127,3 +128,28 @@ def index(request):
         'newsstory': newsStory,
         'headingdetail': headingDetail,
     })
+def save_storye(story, data):
+    sim = []
+    # getdata = rssdata()
+    # get all the saved story
+    savedStory = rssdata.objects.all()
+    for s in savedStory:
+        doc2 = set(s.body.split())
+        coefficient = similar_story(data, s.body)
+        sim.append(coefficient)
+
+    # print(sim)
+    jacc_max = max(sim)
+    # print(jacc_max)
+
+    # set the threshold value to identify Duplicate
+
+    thresHold = .90
+
+    if jacc_max < thresHold:
+
+        s = story.save()
+
+        print("Save Successful:")
+    else:
+        print("Duplicate News Exists:")

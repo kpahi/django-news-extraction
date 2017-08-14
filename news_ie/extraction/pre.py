@@ -124,8 +124,8 @@ def ner(sentence):
 
     # vectorizer = pickle.load(open("vectorizer.pickle"))
 
-    print("Model load done")
-    print("Predicting new sentences:")
+    # print("Model load done")
+    # print("Predicting new sentences:")
 
     new = pos_tag(word_tokenize(sentence))
     #    "A man has died in a road accident that took place at Urlabari - 3 on the East - West highway on Saturday evening."))
