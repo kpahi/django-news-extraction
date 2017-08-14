@@ -2,11 +2,10 @@ import datetime
 import string
 import sys
 
-from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
+# from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from world.models import WayPoint
 
 from .extraction.getdate import extract_date
 from .extraction.getday import get_day
@@ -15,7 +14,7 @@ from .extraction.getnewlocation import geotraverseTree
 from .extraction.ner import getlocation
 from .extraction.vehicle_no import vehicle_no
 from .forms import NameForm
-from .geocoder import *
+# from .geocoder import *
 from .models import News
 from .sentoken import sentences
 from .up import rep
@@ -32,7 +31,7 @@ def get_news(request):
     if request.method == 'POST':
         form = NameForm(request.POST)
         # To display waypoints on the maps
-        waypoints = WayPoint.objects.order_by('name')
+        # waypoints = WayPoint.objects.order_by('name')
 
         if form.is_valid():
             data = form.cleaned_data
@@ -117,28 +116,28 @@ def get_news(request):
 
             # location_coordinates = find_lat_lng(location)
 
-            try:
-                location_coordinates = find_lat_lng(location)
-            except Exception:
-                location_coordinates = [0.0, 0.0]
+            # try:
+            #     location_coordinates = find_lat_lng(location)
+            # except Exception:
+            #     location_coordinates = [0.0, 0.0]
 
             # print(location_coordinates[0])
             # print(location_coordinates[1])
 
             # Save the Coordinate of the location to Database as WayPoint
-            lat = str(location_coordinates[0])
-            lng = str(location_coordinates[1])
-            #gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
-            gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
-            my_long_lat = lat + " " + lng
-            gem = fromstr('POINT(' + my_long_lat + ')')
-            WayPoint(name=' '.join(location), geometry=gem).save()
+            # lat = str(location_coordinates[0])
+            # lng = str(location_coordinates[1])
+            # #gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
+            # gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
+            # my_long_lat = lat + " " + lng
+            # gem = fromstr('POINT(' + my_long_lat + ')')
+            # WayPoint(name=' '.join(location), geometry=gem).save()
 
             # Now save the story
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'waypoints': waypoints, 'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location,'lat':lat,'lng':lng, 'coordintae': location_coordinates})
+            return render(request, 'news_ie/index.html', {'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location})
     else:
         form = NameForm()
 

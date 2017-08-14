@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'world',
     'news_ie',
     'rssdb.apps.RssdbConfig',
 

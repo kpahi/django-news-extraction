@@ -103,7 +103,8 @@ def index(request):
             getdata.injury = story.injury
             getdata.death = story.death
             getdata.location = story.location
-            getdata.header = dictnews[n]
+            # getdata.header = dictnews[n]
+            getdata.header = headings[n]
             getdata.slug= story.slug
 
             newsStory.append(story)
