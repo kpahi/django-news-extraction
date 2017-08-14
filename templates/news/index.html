@@ -13,37 +13,49 @@
 <div class="container">
   <br>
   <div class="row">
-  <div class="col-md-6">
-
-<!-- For Date -->
-<div class="panel-default">
-<div class="panel-heading" style="color:#fff;">
-  <h4> Accidents By Dates </h4>
-</div>
-<div class="panel-body">
 
 
-    <small>
-    <p> Pick up a Range of Date you would like to see </p>
-  </small>
-  <input id='reportrange' placeholder="Select Date"/>
 
-  <button type="submit" id="datebtn">Check</button>
-
-  <div>
-    <h4 id="demo2" > Please Pick Up Date<br> </h4>
+<!-- For Vehicle -->
+<div class="col-md-6">
+  <div class="pre-scrollable">
+  <div class="panel-default">
+  <div class="panel-heading" style="color:#fff;">
+    <div class="nav-item"><h4> Accident Sorted by Vehicles</h4>
   </div>
+</div>
+{% for obj,item in vehicle.items %}
+  <button type="button" id="{{obj}}" onclick= "vehicleclick(this.id)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalv">{{obj}}<span class="badge">{{item}}</span></button>
+{% endfor %}
+<div id="myModalv" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="vecid" class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <div >
+          <h4 id="demovec" ><br> </h4>
 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </div>
 </div>
-
-
+</div>
 <!-- For location -->
 
 <div class="col-md-6">
+  <div class="pre-scrollable">
   <div class="panel-default">
   <div class="panel-heading" style="color:#fff;">
     <div class="nav-item"><h4> Accident Sorted by location </h4>
@@ -80,46 +92,38 @@
 </div>
   </div>
 </div>
+
+</div>
 </div>
 
-
-
-
-
-<!-- For Vehicle -->
+<!-- For Date -->
 <div class="col-md-6">
-  <div class="panel-default">
-  <div class="panel-heading" style="color:#fff;">
-    <div class="nav-item"><h4> Accident Sorted by Vehicles</h4>
+<div class="panel-default">
+<div class="panel-heading" style="color:#fff;">
+  <h4> Accidents By Dates </h4>
+</div>
+<div class="panel-body">
+
+
+    <small>
+    <p> Pick up a Range of Date you would like to see </p>
+  </small>
+  <input id='reportrange' placeholder="Select Date"/>
+
+  <button type="submit" id="datebtn">Check</button>
+
+  <div>
+    <h4 id="demo2" > Please Pick Up Date<br> </h4>
   </div>
-</div>
-{% for obj,item in vehicle.items %}
-  <button type="button" id="{{obj}}" onclick= "vehicleclick(this.id)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalv">{{obj}}<span class="badge">{{item}}</span></button>
-{% endfor %}
-<div id="myModalv" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="vecid" class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <div >
-          <h4 id="demovec" ><br> </h4>
 
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 </div>
 </div>
+
+
+
 
 
 
@@ -131,9 +135,9 @@
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- Cause of change in Bootstrap setting
+<!-- Cause of change in Bootstrap setting-->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
--->
+
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
@@ -141,14 +145,19 @@
 
 <style>
 
-.listed{
 
+.listed{
   background-color: rgb(169, 210, 237);
   color:#000;
   padding: 5px;
   border-radius: 15px;
   margin: 5px;
 }
+.page-header{
+
+  margin: 0.1px;
+}
+
 
 /*.panel-heading{
 
