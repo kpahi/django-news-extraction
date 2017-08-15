@@ -18,7 +18,6 @@ from django.contrib import admin
 
 from news import views
 from rss import views
-from world import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
