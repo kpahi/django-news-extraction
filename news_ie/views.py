@@ -6,6 +6,8 @@ import sys
 from django.http import HttpResponse
 from django.shortcuts import render
 
+import rssdb
+
 from .extraction.getdate import extract_date
 from .extraction.getday import get_day
 from .extraction.getdeathinjury import *
@@ -18,6 +20,9 @@ from .forms import NameForm
 from .models import News
 from .sentoken import sentences
 from .up import rep
+
+# from rssdb.models import rssdata
+
 
 # Create your views here.
 
@@ -145,6 +150,34 @@ def get_news(request):
 
     return render(request, 'news_ie/index.html', {'form': form})
 
+# Save story from the data for extraction function
+
+
+def save_storye(story, data):
+    sim = []
+    # get all the saved story
+    savedStory = News.objects.all()
+    for s in savedStory:
+        doc2 = set(s.body.split())
+        coefficient = similar_story(data, s.body)
+        sim.append(coefficient)
+
+    # print(sim)
+    jacc_max = max(sim)
+    # print(jacc_max)
+
+    # set the threshold value to identify Duplicate
+
+    thresHold = .90
+
+    if jacc_max < thresHold:
+
+        s = story.save()
+
+        print("Save Successful:")
+    else:
+        print("Duplicate News Exists:")
+
 
 def extract_items(n):
     # print(n)
@@ -215,12 +248,15 @@ def extract_items(n):
     # Get location from 1st sentences list
     # from the classifier
     location = parselocation(splited_sen[0])
-    print(location)
+
+    # print(location)
     story.location = location
 
     # Get day from the total sentence list
     day = parseday(sentlist)
+
     print(day)
+
     story.day = day
 
     # from standford, dont forget to use ' '.join(location)
@@ -230,26 +266,19 @@ def extract_items(n):
 
     # location_coordinates = find_lat_lng(location)
 
-    # try:
-    #     location_coordinates = find_lat_lng(location)
-    # except Exception:
-    #     location_coordinates = [0.0, 0.0]
-    #
-    # print(location_coordinates[0])
-    # print(location_coordinates[1])
 
-    # Save the Coordinate of the location to Database as WayPoint
-    # lat = str(location_coordinates[0])
-    # lng = str(location_coordinates[1])
-    #gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
-    # gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
-    # my_long_lat = lat + " " + lng
-    # gem = fromstr('POINT(' + my_long_lat + ')')
-    # WayPoint(name=' '.join(location), geometry=gem).save()
-    #
-    # # Now save the story
-    story.save()
-    # save_story(story, data)
+# Save the Coordinate of the location to Database as WayPoint
+# lat = str(location_coordinates[0])
+# lng = str(location_coordinates[1])
+#gem = "POINT(" + str(lat) + ' ' + str(lng) + ")"
+# gem = GEOSGeometry('POINT(%s %s)' % (lng, lat))
+# my_long_lat = lat + " " + lng
+# gem = fromstr('POINT(' + my_long_lat + ')')
+# WayPoint(name=' '.join(location), geometry=gem).save()
+#
+# # Now save the story
+# story.save()
+    save_storye(story, n)
     #
     return story
 

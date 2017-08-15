@@ -17,7 +17,7 @@ class rssdata(models.Model):
     vehicle_no = models.CharField(blank=True, max_length=100)
     vehicle_no = JSONField()
     date = models.DateField(default=date.today)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=250)
     day = models.CharField(blank=True, max_length=100)
 
     # Timestamps
@@ -25,6 +25,8 @@ class rssdata(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+
+        verbose_name = 'rssdata'
         ordering = ('-date', 'location')
 
     def save(self, *args, **kwargs):
