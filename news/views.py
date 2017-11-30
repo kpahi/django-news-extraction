@@ -34,7 +34,7 @@ def objectlist(request):
                 vecdict[ke]= 1
             else:
                 vecdict[ke]+=1
-    del vecdict["null"]
+    # del vecdict["null"]
     # context = News.objects.all()
     template_name = 'news/index.html'
 

@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^(?P<slug>[-\w]+)/$', NewsDetailView.as_view(), name='news-detail'),
     url(r'^bydate', views.get_req, name='date'),
 
+
 ]
