@@ -47,9 +47,9 @@
             <li class="nav-item">
               <a {% block nav_index_r %} {% endblock nav_index_r %} href="/" >Home</a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a {% block nav_index_rs %} {% endblock nav_index_rs %} style="color:white;" href="/rssdb" >Rssdb</a>
-            </li> -->
+            </li>
             <li class="nav-item">
               <a {% block nav_index %} {% endblock nav_index %} href="/news/" >Database</a>
             </li>
@@ -57,7 +57,7 @@
               <a {% block nav_index_e %} {% endblock nav_index_e %}  href="/news_ie/" >Extraction</a>
             </li>
             <li class="nav-item">
-              <a href="#">About Us</a></li>
+              <a {% block nav_index_about %} {% endblock nav_index_about %} href="/aboutUs/">About Us</a></li>
             </li>
           </ul>
         </div>

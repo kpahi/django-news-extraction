@@ -35,6 +35,7 @@
 }
 .nav-item a{
   color: #E8EAF6;
+  padding: 0px !important;
 }
 
 /*main container css*/
@@ -83,7 +84,13 @@ footer{
   margin-top: 20px;
   padding: 10px;
 }
+.active{
+  background-color:#2196F3;
+  color:#000000;
+  text-shadow: 12px;
+  font-style: italic;
 
+}
 body {font-family: sans-serif}
 #map {width: 100%; height: 350px; margin: 10px;}
 #waypoints {overflow: auto; width: 500px; height: 300px}
