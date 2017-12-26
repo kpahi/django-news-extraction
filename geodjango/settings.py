@@ -29,7 +29,7 @@ SECRET_KEY = 'jov999s0rgy6ehpn&3()3+8f0+w4__^4logmo^!(-^v#-)19xr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.14.20.36']
 
 
 # Application definition
@@ -88,7 +88,8 @@ WSGI_APPLICATION = 'geodjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'geodjango',
         'USER': 'geodjango',
         'PASSWORD': 'my_passwd',

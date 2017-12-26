@@ -1,3 +1,8 @@
+import imp
+import sys
+sys.modules["sqlite"] = imp.new_module("sqlite")
+sys.modules["sqlite3.dbapi2"] = imp.new_module("sqlite.dbapi2")
+import nltk
 import datetime
 import string
 import sys
@@ -8,7 +13,7 @@ from django.shortcuts import render
 
 import rssdb
 
-from .extraction.getdate import extract_date
+#from .extraction.getdate import extract_date
 from .extraction.getday import get_day
 from .extraction.getdeathinjury import *
 from .extraction.getnewlocation import geotraverseTree
@@ -96,11 +101,11 @@ def get_news(request):
             print(injury, actualinjury, injuryNo)
             story.injury = injury
 
-            extdate = extract_date(sentlist)
-            print("Date:", extdate)
-            s = extdate[0]
+            # Use today date
+            today_date = datetime.date.today()
+            story.date= today_date.strftime("%Y-%m-%d")
+            s = today_date.strftime("%Y-%m-%d")
 
-            story.date = datetime.datetime.strptime(s, "%Y-%m-%d").date()
 
             # Get location from 1st sentences list
             # from the classifier
@@ -236,7 +241,8 @@ def extract_items(n):
     story.injury = actualinjury
     story.injury_no = injuryNo
 
-    extdate = extract_date(splited_sen)
+    #extdate = extract_date(splited_sen)
+    extdate = ['2017-08-09']
     print("Date:", extdate)
     try:
         s = extdate[0]
