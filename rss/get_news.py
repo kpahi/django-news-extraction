@@ -1,9 +1,10 @@
+import re
+
 import feedparser
 import requests
 from bs4 import BeautifulSoup
+from newspaper import Article
 from nltk.stem import WordNetLemmatizer
-import re
-
 
 url_link = "http://fetchrss.com/rss/59549c628a93f872018b4567709026440.xml"
 
@@ -26,20 +27,31 @@ for post in rss.entries:
 def get_data_from_rss():
     data = []
     for link in links:
-        page = requests.get(link)
-        soup = BeautifulSoup(page.content, 'html.parser')
-        news = [pt.get_text() for pt in soup.select(".content-wrapper")]
-        data.append(news)
+        article = Article(link)
+        article.download()
+        article.parse()
+
+        news_body = article.text
+        news_body = news_body.replace("\n\n", " ")
+        # page = requests.get(link)
+        # soup = BeautifulSoup(page.content, 'html.parser')
+        # # news = [pt.get_text() for pt in soup.select(".content-wrapper")]
+        # news = get_all_text(soup)
+
+        data.append(news_body)
         # print(data)
     return data
 
-#get news from republica
+
+# get news from republica
+
+
 def get_rss_republica():
     url_link = "http://fetchrss.com/rss/59549c628a93f872018b4567677181163.xml"
     # get all the links of news title
     links = []
-    news=[]
-    data=[]
+    news = []
+    data = []
     rss = feedparser.parse(url_link)
     for post in rss.entries:
         links.append(post.link)
@@ -47,39 +59,39 @@ def get_rss_republica():
         page = requests.get(link)
         soup = BeautifulSoup(page.content, 'html.parser')
         # news = [pt.get_text() for pt in soup.select(".content-wrapper")]
-        divTag = soup.find_all("div",{"class":"box recent-news-categories-details"})
+        divTag = soup.find_all(
+            "div", {"class": "box recent-news-categories-details"})
 
         for tag in divTag:
             alltags = tag.find_all('p')
 
         del alltags[:3]
 
-
-        #print(l[0])
+        # print(l[0])
         for tag in alltags:
             each = str(tag)
             # print(each.replace('<p>','').replace('</p>',''))
-            news.append(each.replace('<p>','').replace('</p>',''))
+            news.append(each.replace('<p>', '').replace('</p>', ''))
         data.append(news)
     return data
 
 
 # get_rss_republica()
 
-#test news is traffic accident related or not
+# test news is traffic accident related or not
 def testaccidentnews(headline):
     ans = False
     headline = headline.lower()
-    testcases=['hit','die','injure','kill','plunge']
-    #spit word with comma and space both
+    testcases = ['hit', 'die', 'injure', 'kill', 'plunge']
+    # spit word with comma and space both
     wordlist = re.findall(r'\s|,|[^,\s]+', headline)
     lemword = []
     for word in wordlist:
-        #lematize all words of the headline with reference to verb
+        # lematize all words of the headline with reference to verb
         test = lemmatizer.lemmatize(word, 'v')
         lemword.append(test)
 
-    #check wordlist with testcases for accident matching news
+    # check wordlist with testcases for accident matching news
     for lem in lemword:
         if lem in testcases:
             ans = True

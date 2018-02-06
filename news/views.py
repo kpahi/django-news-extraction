@@ -21,24 +21,28 @@ from .forms import NewsFilterForm
 
 def objectlist(request):
     model = News
-    context= News.objects.raw('SELECT COUNT(location) as loc,SUM(id) as id FROM news_ie_news GROUP BY location ORDER BY location ASC')
+    context = News.objects.raw(
+        'SELECT COUNT(location) as loc,SUM(id) as id FROM news_ie_news GROUP BY location ORDER BY location ASC')
     # context = News.objects.all()s
     content = News.objects.all()
-    vecdict={}
-    testlist =  []
+    vecdict = {}
+    testlist = []
     for vec in content:
         # testlist.append(vec.vehicle_no)
         vecjson = vec.vehicle_no
         for ke in vecjson.keys():
             if ke not in vecdict:
-                vecdict[ke]= 1
+                vecdict[ke] = 1
             else:
-                vecdict[ke]+=1
-    del vecdict["null"]
+                vecdict[ke] += 1
+
+    # del vecdict["null"]
+
     # context = News.objects.all()
     template_name = 'news/index.html'
 
-    return render_to_response(template_name, {'news': context,'vehicle':vecdict,'allnews':content})
+    return render_to_response(template_name, {'news': context, 'vehicle': vecdict, 'allnews': content})
+
 
 def get_req(request):
     if request.method == 'POST':
@@ -65,7 +69,6 @@ def get_req(request):
 #         context['news'] = News.objects.raw('SELECT COUNT(location) as loc,SUM(id) as id FROM news_ie_news GROUP BY location ORDER BY location ASC')
 #         context['vehicle'] = News.objects.all()
 #         return context
-
 
 
 class NewsDetailView(DetailView):

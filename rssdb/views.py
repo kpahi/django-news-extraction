@@ -24,10 +24,15 @@ def index(request):
     for news in news_list:
         # print(news)
         newss.append(str(news))
+    # import ipdb
+    # ipdb.set_trace()
+
     # for news in republic_list:
     #     repnews.append(str(news))
     # print(len(repnews))
-    newss = [str(news[0]) for news in news_list]
+
+    # newss = [str(news[0]) for news in news_list]
+
     # newss +=repnews
     print("lenght of news:")
     print(len(newss))
@@ -111,14 +116,8 @@ def index(request):
             print("Extracting complete:")
             # save_storye(getdata,n)
             getdata.save()
+            print("Save Complete for RSS")
 
-            # story = News.objects.none()
-            # newsStory.append(story)
-            # newsStory[i] = "Extractions"
-            # extract_items(n)
-
-    # print(len(headings))
-    # print(len(newsStory))
     # This line is main
     headingDetail = dict(zip(headings, newsStory))
 
@@ -129,29 +128,29 @@ def index(request):
         'headingdetail': headingDetail,
     })
 
-
-def save_storye(story, data):
-    sim = []
-    # getdata = rssdata()
-    # get all the saved story
-    savedStory = rssdata.objects.all()
-    for s in savedStory:
-        doc2 = set(s.body.split())
-        coefficient = similar_story(data, s.body)
-        sim.append(coefficient)
-
-    # print(sim)
-    jacc_max = max(sim)
-    # print(jacc_max)
-
-    # set the threshold value to identify Duplicate
-
-    thresHold = .90
-
-    if jacc_max < thresHold:
-
-        s = story.save()
-
-        print("Save Successful:")
-    else:
-        print("Duplicate News Exists:")
+#
+# def save_storye(story, data):
+#     sim = []
+#     # getdata = rssdata()
+#     # get all the saved story
+#     savedStory = rssdata.objects.all()
+#     for s in savedStory:
+#         doc2 = set(s.body.split())
+#         coefficient = similar_story(data, s.body)
+#         sim.append(coefficient)
+#
+#     # print(sim)
+#     jacc_max = max(sim)
+#     # print(jacc_max)
+#
+#     # set the threshold value to identify Duplicate
+#
+#     thresHold = .90
+#
+#     if jacc_max < thresHold:
+#
+#         s = story.save()
+#
+#         print("Save Successful:")
+#     else:
+#         print("Duplicate News Exists:")

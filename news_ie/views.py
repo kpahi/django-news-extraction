@@ -1,12 +1,9 @@
-import imp
-import sys
-sys.modules["sqlite"] = imp.new_module("sqlite")
-sys.modules["sqlite3.dbapi2"] = imp.new_module("sqlite.dbapi2")
-import nltk
 import datetime
+import imp
 import string
 import sys
 
+import nltk
 # from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -25,6 +22,10 @@ from .forms import NameForm
 from .models import News
 from .sentoken import sentences
 from .up import rep
+
+sys.modules["sqlite"] = imp.new_module("sqlite")
+sys.modules["sqlite3.dbapi2"] = imp.new_module("sqlite.dbapi2")
+
 
 # from rssdb.models import rssdata
 
@@ -61,6 +62,8 @@ def get_news(request):
             # Create Sentence Object
             sentclass = sentences()
             sentlist = sentclass.split_into_sentences(data['news_text'])
+            # import ipdb
+            # ipdb.set_trace()
             splited_sen = []
             # # print each sentences
             # # print("\n" + "After Spliting " + "\n")
@@ -103,9 +106,8 @@ def get_news(request):
 
             # Use today date
             today_date = datetime.date.today()
-            story.date= today_date.strftime("%Y-%m-%d")
+            story.date = today_date.strftime("%Y-%m-%d")
             s = today_date.strftime("%Y-%m-%d")
-
 
             # Get location from 1st sentences list
             # from the classifier
@@ -200,6 +202,8 @@ def extract_items(n):
     sentclass = sentences()
     sentlist = sentclass.split_into_sentences(n)
     splited_sen = []
+    # import ipdb
+    # ipdb.set_trace()
     # print each sentences
     # print("\n" + "After Spliting " + "\n")
     for sent in sentlist:
@@ -245,7 +249,11 @@ def extract_items(n):
     extdate = ['2017-08-09']
     print("Date:", extdate)
     try:
-        s = extdate[0]
+        # s = extdate[0]
+        # Use today date
+        today_date = datetime.date.today()
+        # story.date = today_date.strftime("%Y-%m-%d")
+        s = today_date.strftime("%Y-%m-%d")
     except:
         s = "2017-08-09"
 
@@ -253,6 +261,7 @@ def extract_items(n):
 
     # Get location from 1st sentences list
     # from the classifier
+    # print("Length: ", len(splited_sen))
     location = parselocation(splited_sen[0])
 
     # print(location)
