@@ -121,6 +121,9 @@
 
 </div>
 </div>
+</div>
+<br>
+<br>
 
 
 
@@ -418,8 +421,8 @@ $("#datebtn").click(function () {
       // console.log(news.date);
       var date = new Date(news.date);
 
-      if( date > startdate ){
-        if (date < enddate){
+      if( date >= startdate ){
+        if (date <= enddate){
           news_arr.push(news);
 
 

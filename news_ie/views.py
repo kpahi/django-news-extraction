@@ -150,7 +150,7 @@ def get_news(request):
             # story.save()
             save_story(story, data)
 
-            return render(request, 'news_ie/index.html', {'form': form, 'date': extdate, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location})
+            return render(request, 'news_ie/index.html', {'form': form, 'date': s, 'day': day, 'sentences_dic': sentences_dic, 'death': actualdeath, "deathnum": deathNo, 'injury': actualinjury, 'injurynum': injuryNo, 'number_plate': number_plate, 'location': location})
 
     else:
         form = NameForm()

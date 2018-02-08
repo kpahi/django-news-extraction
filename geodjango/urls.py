@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from news import views
+# from news import views
 from rss import views
 
 urlpatterns = [
@@ -26,6 +26,10 @@ urlpatterns = [
     url(r'^news_ie/', include('news_ie.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^rssdb/', include('rssdb.urls')),
+    url(r'^about_us/', views.about_us, name='about'),
+    url(r'^contact_us/', views.contact_us, name='about'),
+    url(r'^search/', views.search_news, name='search_query'),
+    url(r'^feedback/', views.feedback, name='feedback')
 
 
 

@@ -12,14 +12,18 @@
 <div class="container">
   <div class="row"><!--row-->
     <div class="col-md-6">
-      <h2> RSS News </h2>
+      <h2> RSS News  <h4>From Ekantipur</h4></h2>
       <div class="pre-scrollable">
 
       {% for article in object_list%}
       <ul>
         <li class='listed' style='list-style:none;'>
-          <p id={{ article.id }} class="head">   <a href="#">{{article.header}}:</a>
-          <p>{{article.date}}</p>
+
+          <a href="http://kathmandupost.ekantipur.com/tag/road+accident"> <span  class="badge badge-primary"> Source: Ekantipur </span></a><br>
+          <p id={{ article.id }} class="head">   <a href="#" style="color:#4b0082">{{article.header}}:</a><br>
+            <a> <span class="badge badge-pill badge-info">{{ article.location }}</span><br></a>
+          <a>{{article.date}}</a>
+
 
         </p>
         </li>
@@ -73,17 +77,8 @@
 </ul>
 </div>
 
-      <!-- {% for i in "xxx" %}
-            <a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a>
- <li class="active"><a href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
-
-</ul>
-{% endfor %} -->
 
 
-{% else %}
-    <h3>RSS feeds</h3>
-    <p>No feeds found!!! :(</p>
 {% endif %}
     </div>
   </div>

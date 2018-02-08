@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} News Information Extraction {% endblock title %}
+
+{% block nav_index_about_us %}
+    class=" nav-link active"
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+<h1>Search Results</h1>
+
+  {% if all_result %}
+    {% for article in all_result %}
+
+    <ul>
+      <li class='listed' style='list-style:none;'>
+
+        <a href="http://kathmandupost.ekantipur.com/tag/road+accident"> <span  class="badge badge-primary"> Source: Ekantipur </span></a>
+        <p id={{ article.id }} class="head">   <a href="{{ article.get_absolute_url }}" style="color:#4b0082">{{article.body}}:</a>
+          <span class="badge badge-pill badge-info">{{ article.location }}</span><br>
+        <a>{{article.date}}</a>
+
+
+      </p>
+      </li>
+      <br>
+    </ul>
+    {% endfor %}
+
+    {% else %}
+      <h2> No Match Found </h2>
+    {% endif %}
+
+
+
+</div>
+
+
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+<style>
+
+.listed{
+
+  background-color: rgb(169, 210, 237);
+  color:#000;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 5px;
+}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+div.center {text-align: center;}
+
+.pre-scrollable {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+</style>
+
+{% endblock javascript %}

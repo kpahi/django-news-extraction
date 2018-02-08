@@ -143,6 +143,12 @@ STATIC_URL = '/static/'
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "roadaccidentnews@gmail.com"
+EMAIL_HOST_PASSWORD = 'informationextraction'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 try:
     from .local_settings import *
     # DATABASES['default'] = dj_database_url.config()

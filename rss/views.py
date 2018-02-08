@@ -1,17 +1,64 @@
+from django.core.mail import EmailMessage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render, render_to_response
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.generic.list import ListView
 
 from news_ie.extraction.vehicle_no import vehicle_no
 from news_ie.models import News
 from news_ie.views import extract_items, similar_story
 from rssdb.models import rssdata
 
-from django.views.generic.list import ListView
-
 from .get_news import get_data_from_rss, rss, testaccidentnews
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
 
 # Create your views here.
+
+
+def about_us(request):
+
+    return render_to_response('rss/about_us.html', {
+    })
+
+
+def contact_us(request):
+
+    return render_to_response('rss/contact_us.html', {
+    })
+
+
+@csrf_exempt
+def feedback(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        full_body = "Sender Name: " + name + "\n\n" + \
+            "Sender Email: " + email + "\n\n" + "Message: " + message
+
+        email = EmailMessage('From the Web Site', full_body,
+                             to=['070bct517@ioe.edu.np', 'kritishpahi@gmail.com'])
+        email.send()
+
+    return render_to_response('rss/thankyou.html', {
+    })
+
+
+@csrf_exempt
+def search_news(request):
+    if request.method == 'POST':
+        search_keyword = request.POST.get('query')
+
+        # form = NameForm(request.POST)
+        # # To display waypoints on the maps
+        # # waypoints = WayPoint.objects.order_by('name')
+        #
+        # if form.is_valid():
+        #     data = form.cleaned_data
+        model = News
+
+        result = model.objects.filter(body__icontains=search_keyword)
+
+        return render_to_response('rss/search_news.html', {'all_result': result})
 
 
 # def index(request):

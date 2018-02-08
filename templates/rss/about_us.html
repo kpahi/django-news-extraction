@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} News Information Extraction {% endblock title %}
+
+{% block nav_index_about_us %}
+    class=" nav-link active"
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Team Members Row -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="my-4">Our Team: BCT070</h2>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="{% static "img/aman_sir.jpg" %}" alt="">
+          <h3>Dr. Aman Shakya <br>
+            <small>Supervisior</small>
+          </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="{% static "img/amit.jpg" %}" alt="">
+          <h3>Amit Bhandari <br>
+            <small>070/BCT/505</small>
+          </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="{% static "img/basanta.jpg" %}" alt="">
+          <h3>Basanta Maharjan <br>
+            <small>070/BCT/511</small>
+          </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center mb-4">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="{% static "img/kritish.jpg" %}" alt="">
+          <h3>Kritish Pahi <br>
+            <small>070/BCT/517</small>
+          </h3>
+        </div>
+      </div>
+
+    </div>
+    <br>
+
+
+{% endblock content %}
