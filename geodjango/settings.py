@@ -29,7 +29,7 @@ SECRET_KEY = 'jov999s0rgy6ehpn&3()3+8f0+w4__^4logmo^!(-^v#-)19xr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '52.14.20.36', 'roadaccidentinnepal.tk']
 
 
 # Application definition

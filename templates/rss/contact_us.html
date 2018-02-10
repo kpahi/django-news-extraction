@@ -5,12 +5,13 @@
 {% block title %} News Information Extraction {% endblock title %}
 
 {% block nav_index_contact_us %}
-    class=" nav-link active"
+    class="nav-link active btn-primary"
 {% endblock %}
 
 
 
 {% block content %}
+
 <div class="container">
 	<div class="row">
     <div class="col-md-3 col-md-offset-3">
@@ -47,13 +48,18 @@
               </div>
             </div>
 
+
+
             <!-- Form actions -->
+            <div  name="recaptcha_challenge_field" class="g-recaptcha" data-callback="capcha_filled" data-expired-callback="capcha_expired" data-sitekey="6LdZRUUUAAAAAGY9JvSJWTHxDBOXXHYTSXG4KYrs" style="padding-left:0.5cm;"></div>
+
             <div class="form-group">
               <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button id="send_feedback" type="submit" class="btn btn-primary btn-lg" style="display:none;">Submit</button>
               </div>
             </div>
           </fieldset>
+
           </form>
         </div>
       </div>
@@ -61,3 +67,19 @@
 </div>
 
 {% endblock content %}
+
+
+{% block javascript %}
+<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback' async defer>
+
+</script>
+<script>
+var capcha_filled = function(){
+  document.getElementById("send_feedback").style.display = "block";
+
+}
+
+
+</script>
+
+{% endblock javascript %}

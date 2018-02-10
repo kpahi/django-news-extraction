@@ -34,10 +34,12 @@ def feedback(request):
         message = request.POST.get('message')
         full_body = "Sender Name: " + name + "\n\n" + \
             "Sender Email: " + email + "\n\n" + "Message: " + message
+        print(full_body)
+        print("MESSAGE SENT")
 
-        email = EmailMessage('From the Web Site', full_body,
-                             to=['070bct517@ioe.edu.np', 'kritishpahi@gmail.com'])
-        email.send()
+        # email = EmailMessage('From the Web Site', full_body,
+        #                      to=['070bct517@ioe.edu.np'])
+        # email.send()
 
     return render_to_response('rss/thankyou.html', {
     })

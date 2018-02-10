@@ -5,14 +5,16 @@
 {% block title %} News Information Extraction {% endblock title %}
 
 {% block nav_index_r %}
-    class=" nav-link active"
+    class="nav-link active btn btn-primary"
 {% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="row"><!--row-->
     <div class="col-md-6">
+      <div style="padding-left: 1.2cm;">
       <h2> RSS News  <h4>From Ekantipur</h4></h2>
+    </div>
       <div class="pre-scrollable">
 
       {% for article in object_list%}
@@ -31,20 +33,6 @@
       {% endfor %}
       {# .... **Now the pagination section** .... #}
     {% if is_paginated %}
-        <!-- <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
-            </div> -->
-
             <div class="center">
               <ul class="pagination">
                 {% if page_obj.has_previous %}
@@ -142,16 +130,13 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 div.center {text-align: center;}
 
 .pre-scrollable {
-    max-height: 450px;
+    max-height: 700px;
     overflow-y: scroll;
 }
 </style>
 
 <script>
-// function css()
-// {
-//   $('.load').css("display", "block");
-// }
+
 
 $(document).ready(function(){
   $('ul.pagination').on('click', 'a', function() { // listen for click on pagination link
